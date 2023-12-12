@@ -125,7 +125,7 @@ jobs:
             |-|
             <br>($i.item
             | select STAT survive
-            | to md)<br>
+            | to md)</br>
             "
           })
           $summary ++= "\n# Data\n"
