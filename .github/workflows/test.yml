@@ -26,10 +26,13 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Create Classes
+    - name: Create Class 1
       run: javac Player1/Player.java
+    - name: Create Class 2
       run: javac Player2/Player.java
+    - name: Create Class 3
       run: javac Player3/Player.java
+    - name: Create Class 4
       run: javac Player4/Player.java
 
     - name: Run Game
