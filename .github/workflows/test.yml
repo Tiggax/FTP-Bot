@@ -85,7 +85,7 @@ jobs:
         let winners = (open result${{ matrix.test }}.nuon
         | where survive == "true")
 
-        if ["Player1" "Player2" ] | any {|p| $p in $winners.STAT } {
+        if (["Player1" "Player2" ] | any {|p| $p in $winners.STAT }) {
         print $"${{ matrix.test }}: Success ($winners.STAT) won"
         } else {
         print $"${{ matrix.test }}: fail! ($winners.STAT) won"
