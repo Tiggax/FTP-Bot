@@ -55,7 +55,7 @@ jobs:
     - name: Determine game
       shell: nu {0}
       run: |
-        open game.log --raw 
+        open game${{ matrix.test }}.log --raw 
         | lines
         | last 72
         | split list ""
@@ -72,7 +72,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: output-artifact
-        path: result.nuon
+        path: result${{ matrix.test }}.nuon
         
     - name: Show winner
       shell: nu {0}
