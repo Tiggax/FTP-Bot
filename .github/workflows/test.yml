@@ -120,7 +120,11 @@ jobs:
           $summary ++= ($data
           | enumerate
           | each {|i|
-            $"<td>\n\nRun: ($i.index)\n($i.item | select STAT survive | to md)\n</td>"
+            $"<td>\n\nRun: ($i.index)\n($i.item 
+            | select STAT survive 
+            | to md 
+            | str replace -a "true" ":white_check_mark:" 
+            | str replace -a "false" ":x:")\n</td>"
           })
           $summary ++= "</tr></table>\n\n# Data\n\n"
           $summary ++= ($data
