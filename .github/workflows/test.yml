@@ -113,8 +113,9 @@ jobs:
           | each {|run|
             open $run
           })
-          $env.GITHUB_STEP_SUMMARY ++= "\n# Test summary\n"
-          $env.GITHUB_STEP_SUMMARY ++= ($data
+          mut summary = ""
+          $summary ++= "\n# Test summary\n"
+          $summary ++= ($data
           | enumerate
           | each {|i|
             $"
@@ -125,14 +126,18 @@ jobs:
             | to md)
             "
           })
-          $env.GITHUB_STEP_SUMMARY ++= "\n# Data\n"
-          $env.GITHUB_STEP_SUMMARY ++= ($data
+          $summary ++= "\n# Data\n"
+          $summary ++= ($data
           | enumerate
           | each {|i|
             $"
             ## Run ($i.index) data
             ($i.item | to md)
             "})
+
+            $summary | save summary.md
+      - name: export to bash env
+        run: cat summary.md >>  $GITHUB_STEP_SUMMARY
 
           
     
