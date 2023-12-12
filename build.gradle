@@ -1,0 +1,32 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // You can add dependencies if needed
+}
+
+// Define a list of player directories
+def playerDirectories = ['Player1', 'Player2', 'Player3', 'Player4']
+
+// Create a task for each player directory
+playerDirectories.each { playerDir ->
+    task "compile${playerDir}Classes"(type: JavaCompile) {
+        source = fileTree(playerDir) // Set the source directory
+        destinationDir = file("$playerDir") // Set the destination directory
+
+        classpath = sourceSets.main.compileClasspath // Set the classpath
+
+        options.compilerArgs += ["-source", "11", "-target", "11"] // Adjust the Java version if needed
+    }
+}
+
+// Create a custom task that depends on the individual compile tasks
+task compileAllPlayers {
+    dependsOn playerDirectories.collect { tasks.getByName("compile${it}Classes") }
+}
+
+// Set the default tasks to be executed when running 'gradle' without any arguments
+defaultTasks 'compileAllPlayers'
