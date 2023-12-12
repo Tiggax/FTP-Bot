@@ -96,6 +96,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: hustcer/setup-nu@v3.8
+        with:
+          version: "0.87.1"
       - name: generate Summary
         shell: nu {0}
         run: |
