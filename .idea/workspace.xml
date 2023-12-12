@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added IntelliJ configuration and resolved a Gradle compiler bug.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,10 +42,13 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Blaz/IdeaProjects/FTP-Bot/Game.jar"
+    "last_opened_file_path": "C:/Users/Blaz/IdeaProjects/FTP-Bot/Game.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
-  <component name="RunManager" selected="JAR Application.Unnamed">
+  <component name="RunManager" selected="JAR Application.Run game">
     <configuration name="FTP-Bot [compileAllPlayers]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -67,7 +70,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Unnamed" type="JarApplication" nameIsGenerated="true">
+    <configuration name="Run game" type="JarApplication">
       <option name="JAR_PATH" value="$PROJECT_DIR$/Game.jar" />
       <option name="PROGRAM_PARAMETERS" value="Player1/class Player2/class Player3/class Player4/class" />
       <option name="WORKING_DIRECTORY" value="C:\Users\Blaz\IdeaProjects\FTP-Bot" />
@@ -79,7 +82,7 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.FTP-Bot [compileAllPlayers]" />
-      <item itemvalue="JAR Application.Unnamed" />
+      <item itemvalue="JAR Application.Run game" />
     </list>
     <recent_temporary>
       <list>
@@ -96,6 +99,13 @@
       <option name="presentableId" value="Default" />
       <updated>1702415571777</updated>
     </task>
+    <task id="LOCAL−00001" summary="Added IntelliJ configuration and resolved a Gradle compiler bug.">
+      <created>1702416082352</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1702416082352</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -108,5 +118,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added IntelliJ configuration and resolved a Gradle compiler bug." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added IntelliJ configuration and resolved a Gradle compiler bug." />
   </component>
 </project>
