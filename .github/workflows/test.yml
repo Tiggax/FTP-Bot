@@ -41,6 +41,13 @@ jobs:
     - name: Run Game
       run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game.log
       continue-on-error: true
+      
+    - name: Save Game log
+      uses: actions/upload-artifact@v2
+      with:
+        name: output-artifact
+        path: game.log
+        
     - name: Determine game
       shell: nu {0}
       run: |
@@ -56,7 +63,13 @@ jobs:
         }
         | save result.nuon
         print (open result.nuon)
-
+    
+    - name: Save result
+      uses: actions/upload-artifact@v2
+      with:
+        name: output-artifact
+        path: result.nuon
+        
     - name: Show winner
       shell: nu {0}
       run: |
