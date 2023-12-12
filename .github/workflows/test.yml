@@ -116,23 +116,15 @@ jobs:
           
           mut summary = ""
           
-          $summary ++= "\n# Test summary\n
-          <table>
-          <tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
-          <tr><td>
-          "
+          $summary ++= "\n# Test summary\n<table>\n<tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>\n<tr>"
           $summary ++= ($data
           | enumerate
           | each {|i|
-            $"
-            Run: ($i.index)
-            ($i.item
+            $"<td>Run: ($i.index)\n($i.item
             | select STAT survive
-            | to md)
-            </td><td>
-            "
+            | to md)\n</td>"
           })
-          $summary ++= "</td></tr></table>\n# Data\n"
+          $summary ++= "</tr></table>\n# Data\n"
           $summary ++= ($data
           | enumerate
           | each {|i|
@@ -141,7 +133,7 @@ jobs:
             ($i.item | to md)
             "})
 
-            $summary | save summary.md
+            $summary | save --raw summary.md
       - name: export to bash env
         run: cat summary.md >>  $GITHUB_STEP_SUMMARY
 
