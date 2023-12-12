@@ -119,21 +119,20 @@ jobs:
           $summary ++= "\n# Test summary\n
           <table>
           <tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
-          <tr>
+          <tr><td>
           "
           $summary ++= ($data
           | enumerate
           | each {|i|
             $"
-            <td>
             Run: ($i.index)
             ($i.item
             | select STAT survive
             | to md)
-            </td>
+            </td><td>
             "
           })
-          $summary ++= "</tr></table>\n# Data\n"
+          $summary ++= "</td></tr></table>\n# Data\n"
           $summary ++= ($data
           | enumerate
           | each {|i|
