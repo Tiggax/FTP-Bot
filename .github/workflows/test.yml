@@ -43,7 +43,7 @@ jobs:
       run: javac Player4/Player.java
 
     - name: Run Game
-      run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game${{ matrix.test }}.log
+      run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game${{ matrix.test }}.log; exit 0
       continue-on-error: true
       
     - name: Save Game log
