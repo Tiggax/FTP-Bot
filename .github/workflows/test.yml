@@ -47,7 +47,7 @@ jobs:
       continue-on-error: true
       
     - name: Save Game log
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: output-artifact
         path: game${{ matrix.test }}.log
@@ -69,7 +69,7 @@ jobs:
         print (open result${{ matrix.test }}.nuon)
     
     - name: Save result
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: output-artifact
         path: result${{ matrix.test }}.nuon
