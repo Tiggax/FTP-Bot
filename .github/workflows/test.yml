@@ -116,16 +116,21 @@ jobs:
           
           mut summary = ""
           
-          $summary ++= "\n# Test summary\n"
+          $summary ++= "\n# Test summary\n
+          <table>
+          <tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
+          
+          "
           $summary ++= ($data
           | enumerate
           | each {|i|
             $"
-            |Run: ($i.index)|
-            |-|
-            <br>($i.item
+            <tr><td>
+            Run: ($i.index)
+            ($i.item
             | select STAT survive
-            | to md)</br>
+            | to md)
+            </tr></td>
             "
           })
           $summary ++= "\n# Data\n"
