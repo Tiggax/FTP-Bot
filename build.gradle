@@ -15,7 +15,7 @@ def playerDirectories = ['Player1', 'Player2', 'Player3', 'Player4']
 playerDirectories.each { playerDir ->
     task "compile${playerDir}Classes"(type: JavaCompile) {
         source = fileTree(playerDir) // Set the source directory
-        destinationDir = file("$playerDir") // Set the destination directory
+        destinationDir = file("$playerDir/class") // Set the destination directory
 
         classpath = sourceSets.main.compileClasspath // Set the classpath
 
