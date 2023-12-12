@@ -113,17 +113,19 @@ jobs:
           | each {|run|
             open $run
           })
+          
           mut summary = ""
+          
           $summary ++= "\n# Test summary\n"
           $summary ++= ($data
           | enumerate
           | each {|i|
             $"
-            ## Run: ($i.index)
-            
-            ($i.item
+            |Run: ($i.index)|
+            |-|
+            <br>($i.item
             | select STAT survive
-            | to md)
+            | to md)<br>
             "
           })
           $summary ++= "\n# Data\n"
