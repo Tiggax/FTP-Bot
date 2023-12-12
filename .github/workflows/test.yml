@@ -122,7 +122,7 @@ jobs:
           | each {|i|
             $"<td>\n\nRun: ($i.index)\n($i.item | select STAT survive | to md)\n</td>"
           })
-          $summary ++= "</tr></table>\n# Data\n"
+          $summary ++= "</tr></table>\n\n# Data\n\n"
           $summary ++= ($data
           | enumerate
           | each {|i|
