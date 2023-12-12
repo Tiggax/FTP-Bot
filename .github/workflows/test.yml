@@ -71,7 +71,7 @@ jobs:
     - name: Save result
       uses: actions/upload-artifact@v3
       with:
-        name: output-artifact
+        name: results
         path: result${{ matrix.test }}.nuon
         
     - name: Show winner
@@ -99,10 +99,15 @@ jobs:
       - uses: hustcer/setup-nu@v3.8
         with:
           version: "0.87.1"
+
+      - name: Get Reports
+        uses: actions/download-artifact@v3
+        with:
+          name: results
+          
       - name: generate Summary
         shell: nu {0}
         run: |
-          print ls
           let data = (ls result*.nuon
           | get name
           | each {|run|
