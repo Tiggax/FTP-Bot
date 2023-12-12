@@ -1,4 +1,4 @@
-name: Java CI with Nushell UwU
+name: Build Bots
 
 on:
   push:
