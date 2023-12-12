@@ -102,7 +102,7 @@ jobs:
       - name: generate Summary
         shell: nu {0}
         run: |
-          ls
+          print ls
           let data = (ls result*.nuon
           | get name
           | each {|run|
