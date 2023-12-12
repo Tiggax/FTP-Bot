@@ -122,11 +122,11 @@ jobs:
           $env.GITHUB_STEP_SUMMARY ++= "\n# Data\n"
           $env.GITHUB_STEP_SUMMARY ++= ($data
           | enumerate
-          | each |i|
+          | each {|i|
             $"
             ## Run ($i.index) data
             ($i.item | to md)
-            ")
+            "})
 
           
     
