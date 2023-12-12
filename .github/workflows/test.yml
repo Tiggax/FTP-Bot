@@ -61,7 +61,7 @@ jobs:
       shell: nu {0}
       run: |
         open result.nuon
-        where survive == "true"
+        | where survive == "true"
     - name: New Kids on the block won?
       shell: nu {0}
       run: |
