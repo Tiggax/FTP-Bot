@@ -90,5 +90,3 @@ jobs:
         } else {
         print $"${{ matrix.test }}: fail! ($winners.STAT) won"
         }
-    - name: Job Finished
-      if: ${{ success() }}
