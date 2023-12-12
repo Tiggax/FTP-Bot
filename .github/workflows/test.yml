@@ -133,7 +133,7 @@ jobs:
             </tr></td>
             "
           })
-          $summary ++= "\n# Data\n"
+          $summary ++= "</table>\n# Data\n"
           $summary ++= ($data
           | enumerate
           | each {|i|
