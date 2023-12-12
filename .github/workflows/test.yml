@@ -15,7 +15,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test_game:
 
     runs-on: ubuntu-latest
     strategy:
@@ -90,3 +90,40 @@ jobs:
         } else {
         print $"${{ matrix.test }}: fail! ($winners.STAT) won"
         }
+
+  generate_report:
+    needs: test_game
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: generate Summary
+        shell: nu {0}
+        run: |
+          let data = (ls result*.nuon
+          | get name
+          | each {|run|
+            open $run
+          })
+          $env.GITHUB_STEP_SUMMARY ++= "\n# Test summary\n"
+          $env.GITHUB_STEP_SUMMARY ++= ($data
+          | enumerate
+          | each {|i|
+            $"
+            ## Run: ($i.index)
+            
+            ($i.item
+            | select STAT survive
+            | to md)
+            "
+          })
+          $env.GITHUB_STEP_SUMMARY ++= "\n# Data\n"
+          $env.GITHUB_STEP_SUMMARY ++= ($data
+          | enumerate
+          | each |i|
+            $"
+            ## Run ($i.index) data
+            ($i.item | to md)
+            ")
+
+          
+    
