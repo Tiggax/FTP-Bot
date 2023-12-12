@@ -55,6 +55,7 @@ jobs:
           | into record
         }
         | save result.nuon
+        print (open result.nuon)
 
     - name: Show winner
       shell: nu {0}
