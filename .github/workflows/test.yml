@@ -49,7 +49,7 @@ jobs:
     - name: Save Game log
       uses: actions/upload-artifact@v3
       with:
-        name: output-artifact
+        name: games
         path: game${{ matrix.test }}.log
         
     - name: Determine game
