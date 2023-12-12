@@ -18,6 +18,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        
 
     steps:
     - uses: actions/checkout@v3
@@ -39,14 +43,14 @@ jobs:
       run: javac Player4/Player.java
 
     - name: Run Game
-      run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game.log
+      run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game${{ matrix.test }}.log
       continue-on-error: true
       
     - name: Save Game log
       uses: actions/upload-artifact@v2
       with:
         name: output-artifact
-        path: game.log
+        path: game${{ matrix.test }}.log
         
     - name: Determine game
       shell: nu {0}
@@ -61,8 +65,8 @@ jobs:
           | transpose -r
           | into record
         }
-        | save result.nuon
-        print (open result.nuon)
+        | save result${{ matrix.test }}.nuon
+        print (open result${{ matrix.test }}.nuon)
     
     - name: Save result
       uses: actions/upload-artifact@v2
@@ -73,18 +77,18 @@ jobs:
     - name: Show winner
       shell: nu {0}
       run: |
-        open result.nuon
+        open result${{ matrix.test }}.nuon
         | where survive == "true"
     - name: New Kids on the block won?
       shell: nu {0}
       run: |
-        let winners = (open result.nuon
+        let winners = (open result${{ matrix.test }}.nuon
         | where survive == "true")
-        
+
         if ["Player1" "Player2" ] in $winners.STAT {
-        print $"Success ($winners.STAT) won"
+        print $"${{ matrix.test }}: Success ($winners.STAT) won"
         } else {
-        print $"fail! ($winners.STAT) won"
+        print $"${{ matrix.test }}: fail! ($winners.STAT) won"
         exit 1
         }
 
