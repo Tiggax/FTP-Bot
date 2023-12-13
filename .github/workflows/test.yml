@@ -173,8 +173,8 @@ jobs:
           $summary ++= "|Player| Wins :white_check_mark: vs. Loses :x: |:white_check_mark: count|:x: count|\n|-|-|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            let wins = (""| fill -c "█" -w (($v / $sum ) * 120 | into int))
-            let losses = (""| fill -c "░" -w (((10 - $v) / $sum ) * 120 | into int))
+            let wins = (""| fill -c "█" -w (($v / $sum ) * 120 | math round))
+            let losses = (""| fill -c "░" -w (((10 - $v) / $sum ) * 120 | math round))
             $"|($k)|($wins)($losses)|($v)|(10 - $v)|"
           })
           
