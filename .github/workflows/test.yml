@@ -43,7 +43,8 @@ jobs:
       run: javac Player4/*.java
 
     - name: Run Game
-      run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game${{ matrix.test }}.log; exit 0
+      shell: nu {0}
+      run: try { java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 out> game${{ matrix.test }}.log } catch {}
       continue-on-error: true
       
     - name: Save Game log
