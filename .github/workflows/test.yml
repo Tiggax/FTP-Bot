@@ -32,7 +32,7 @@ jobs:
         distribution: 'temurin'
     - uses: hustcer/setup-nu@v3.8
       with:
-        version: "0.87.1"
+        version: "0.88"
     - name: Create Class 1
       run: javac Player1/Player.java
     - name: Create Class 2
@@ -98,7 +98,7 @@ jobs:
     steps:
       - uses: hustcer/setup-nu@v3.8
         with:
-          version: "0.87.1"
+          version: "0.88"
 
       - name: Get Reports
         uses: actions/download-artifact@v3
@@ -125,6 +125,35 @@ jobs:
             | to md )\n</td>"
           })
           $summary ++= "</tr></table>\n\n# Data\n\n"
+          
+          let grouped = ($data
+          | enumerate
+          | each {|i|
+            $i.item | select STAT survive
+            | upsert game $i.index
+          }
+          | flatten
+          | into value
+          )
+          
+          let players = ($grouped
+          | where survive
+          | group-by STAT
+          | items {|k,v|
+           {$k: ($v | length)}
+          }
+          | into record
+          | flatten
+          | into record)
+
+          let sum = $players | values | reduce {|v,agg| $agg + $v}
+          $summary ++= "| | |\n|-|-|"
+          $summary ++= ($players
+          | items {|k,v|
+            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|"
+          })
+          
+          
           $summary ++= ($data
           | enumerate
           | each {|i|
