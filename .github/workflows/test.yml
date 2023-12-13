@@ -168,7 +168,7 @@ jobs:
           $summary ++= "\n\n|Player| Loses :x:|\n|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|"
+            $"|($k)|(""| fill -c "░" -w (($v / $sum ) * 100 | into int))|"
           })
           
           
