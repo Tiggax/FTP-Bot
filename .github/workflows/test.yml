@@ -151,7 +151,7 @@ jobs:
           $summary ++= "|Player| Wins :white_check_mark:|count|\n|-|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|($v)|"
+            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 300 | into int))|($v)|"
           })
 
 
@@ -169,7 +169,7 @@ jobs:
           $summary ++= "\n\n|Player| Loses :x:|count|\n|-|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "░" -w (($v / $sum ) * 100 | into int))|($v)|"
+            $"|($k)|(""| fill -c "░" -w (($v / $sum ) * 300 | into int))|($v)|"
           })
           
           
