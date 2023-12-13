@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player {
@@ -38,8 +39,11 @@ public class Player {
 				//Test for attack
 				for (int i = 0; i < player.planets.size(); i++) {
 					//if (!teammate.planets.isEmpty())attack(player.planets.get(i).name, teammate.planets.get(0).name, 1);
-					if((turn & 1) == 0 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
-					else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
+					if(turn == 2 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
+
+
+
+					//else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
 				}
 
 				//First turn we meet our teammate
@@ -73,6 +77,9 @@ public class Player {
 	public static void getGameState() throws IOException {
 
 		//Reset data from previous turn
+		Planet.allPlanets = new ArrayList<>();
+		Fleet.allFleets = new ArrayList<>();
+
 		player.resetData();
 		teammate.resetData();
 		firstEnemy.resetData();
@@ -85,6 +92,7 @@ public class Player {
 
 			String line = stdin.readLine();
 			String[] tokens = line.split(" ");
+
 
 			switch (line.charAt(0)){
 
@@ -102,13 +110,14 @@ public class Player {
 				//Setup planets
 				case 'P':
 					Planet newPlanet = new Planet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
-					getPlayerByColor(tokens[6]).planets.add(newPlanet);
+					getPlayerByColor(tokens[6]).addPlanet(newPlanet);
 					break;
 
 				//Setup fleet
 				case 'F':
+					Log.print(line + "  " + "");
 					Fleet newFleet = new Fleet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]);
-					getPlayerByColor(tokens[7]).fleets.add(newFleet);
+					getPlayerByColor(tokens[7]).addFleet(newFleet);
 					break;
 
 				//Someone died (string is not in color????????? this data is totally useless)

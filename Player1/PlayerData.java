@@ -17,4 +17,15 @@ public class PlayerData {
     public PlayerData(boolean neutral) {
         if (neutral) color = possibleColors[possibleColors.length - 1];
     }
+
+    public void addPlanet(Planet planet){
+        planets.add(planet);
+        Planet.allPlanets.add(planet);
+    }
+
+    public void addFleet(Fleet fleet){
+        fleets.add(fleet);
+        Fleet.allFleets.add(fleet);
+    }
+
 }

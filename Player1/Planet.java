@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+
 public class Planet {
+
+    public static ArrayList<Planet> allPlanets;
 
     public int name;
 
@@ -15,4 +19,18 @@ public class Planet {
         this.size = Float.parseFloat(size);
         this.fleetSize = Integer.parseInt(fleetSize);
     }
+
+
+    public static Planet findPlanetByName(int name){
+
+        for (Planet obj : allPlanets) {
+            if (obj.name == name) {
+                return obj;
+            }
+        }
+        return null;
+
+    }
+
+
 }
