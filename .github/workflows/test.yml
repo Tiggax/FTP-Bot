@@ -138,10 +138,13 @@ jobs:
               $out ++= "</tr><tr>"
             }
           
-            $"<td>\n\nRun: ($i.index)\n($i.item 
+            $out ++= $"<td>\n\nRun: ($i.index)\n($i.item 
             | select STAT survive 
             | to md )\n</td>"
+
+            $out
           })
+          
           $summary ++= "</tr></table>\n\n# Data\n\n"
 
           $summary | save summary.md --raw -f
