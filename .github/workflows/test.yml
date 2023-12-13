@@ -32,7 +32,7 @@ jobs:
         distribution: 'temurin'
     - uses: hustcer/setup-nu@v3.8
       with:
-        version: "0.87.1"
+        version: "0.88"
     - name: Create Class 1
       run: javac Player1/Player.java
     - name: Create Class 2
@@ -98,7 +98,7 @@ jobs:
     steps:
       - uses: hustcer/setup-nu@v3.8
         with:
-          version: "0.87.1"
+          version: "0.88"
 
       - name: Get Reports
         uses: actions/download-artifact@v3
