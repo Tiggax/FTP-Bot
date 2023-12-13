@@ -133,6 +133,11 @@ jobs:
           $summary ++= ($data
           | enumerate
           | each {|i|
+            mut $out = ""
+            if ($.index mod 5 == 0) {
+              $out ++= "</tr><tr>"
+            }
+          
             $"<td>\n\nRun: ($i.index)\n($i.item 
             | select STAT survive 
             | to md )\n</td>"
