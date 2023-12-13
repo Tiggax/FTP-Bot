@@ -136,7 +136,7 @@ jobs:
           | into value
           )
           
-          let players = $grouped
+          let players = ($grouped
           | where survive
           | group-by STAT
           | items {|k,v|
@@ -144,12 +144,13 @@ jobs:
           }
           | into record
           | flatten
+          | into record)
 
-          let sum = $players | values | flatten | reduce {|v,agg| $agg + $v}
+          let sum = $players | values | reduce {|v,agg| $agg + $v}
           $summary ++= "| | |\n|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "█" -w (($v/$sum)*100))|"
+            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|"
           })
           
           
