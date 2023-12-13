@@ -34,13 +34,13 @@ jobs:
       with:
         version: "0.88"
     - name: Create Class 1
-      run: javac Player1/Player.java
+      run: javac Player1/*.java
     - name: Create Class 2
-      run: javac Player2/Player.java
+      run: javac Player2/*.java
     - name: Create Class 3
-      run: javac Player3/Player.java
+      run: javac Player3/*.java
     - name: Create Class 4
-      run: javac Player4/Player.java
+      run: javac Player4/*.java
 
     - name: Run Game
       run: java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 > game${{ matrix.test }}.log; exit 0
