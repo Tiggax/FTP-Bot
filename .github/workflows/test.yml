@@ -148,7 +148,24 @@ jobs:
           | into record)
 
           let sum = $players | values | reduce {|v,agg| $agg + $v}
-          $summary ++= "| | |\n|-|-|"
+          $summary ++= "|Player| Wins :white_check_mark:|\n|-|-|"
+          $summary ++= ($players
+          | items {|k,v|
+            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|"
+          })
+
+
+          let players = ($grouped
+          | where survive == false
+          | group-by STAT
+          | items {|k,v|
+           {$k: ($v | length)}
+          }
+          | into record
+          | flatten
+          | into record)
+          
+          $summary ++= "\n\n|Player| Loses :x:|\n|-|-|"
           $summary ++= ($players
           | items {|k,v|
             $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|"
