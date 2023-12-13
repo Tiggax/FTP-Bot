@@ -125,7 +125,7 @@ jobs:
             | to md )\n</td>"
           })
           $summary ++= "</tr></table>\n\n# Data\n\n"
-          █
+          
           let grouped = ($data
           | enumerate
           | each {|i|
