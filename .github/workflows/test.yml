@@ -139,7 +139,7 @@ jobs:
           })
           $summary ++= "</tr></table>\n\n# Data\n\n"
 
-          $summary | save summary.md --raw
+          $summary | save summary.md --raw -f
 
       
       - name: Generate w/l graph
@@ -178,7 +178,7 @@ jobs:
             $"|($k)|($wins)($losses)|($v)|(10 - $v)|"
           })
           
-          $summary | save summary.md --raw
+          $summary | save summary.md --raw -f
 
       
       - name: add raw data
@@ -196,7 +196,7 @@ jobs:
             ($i.item | to md)
             "})
 
-          $summary | save summary.md --raw
+          $summary | save summary.md --raw -f
 
       
       - name: Generate summary
@@ -208,7 +208,7 @@ jobs:
           $summary 
             | str replace -a "true" ":white_check_mark:" 
             | str replace -a "false" ":x:"
-            | save --raw summary.md
+            | save --raw summary.md -f
             
       - name: export to bash env
         run: cat summary.md >>  $GITHUB_STEP_SUMMARY
