@@ -23,7 +23,7 @@ jobs:
         distribution: 'temurin'
     - uses: hustcer/setup-nu@v3.8
       with:
-        version: "0.87.1"
+        version: "0.88"
     
     - name: Save Player${{ matrix.player }}
       uses: actions/upload-artifact@v3
