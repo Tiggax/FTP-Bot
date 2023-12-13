@@ -130,9 +130,16 @@ jobs:
           $summary ++= ($data
           | enumerate
           | each {|i|
-            $"<td>\n\nRun: ($i.index)\n($i.item 
+            mut out = ""
+            if (($i.index mod 10 == 0) and $i.index != 0) { 
+              $out ++= "</tr><tr>"
+            }
+            
+            $out ++= $"<td>\n\nRun: ($i.index)\n($i.item 
             | select STAT survive 
             | to md )\n</td>"
+            
+            $out
           })
           $summary ++= "</tr></table>\n\n# Data\n\n"
 
@@ -171,8 +178,8 @@ jobs:
           $summary ++= ($players
           | items {|k,v|
             let wins = (""| fill -c "█" -w (($v / $sum ) * 120 | math round))
-            let losses = (""| fill -c "░" -w (((10 - $v) / $sum ) * 120 | math round))
-            $"|($k)|($wins)($losses)|($v)|(10 - $v)|"
+            let losses = (""| fill -c "░" -w (((30 - $v) / $sum ) * 120 | math round))
+            $"|($k)|($wins)($losses)|($v)|(30 - $v)|"
           })
           
           $summary | save summary.md --raw -f
