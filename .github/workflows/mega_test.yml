@@ -131,7 +131,7 @@ jobs:
           | enumerate
           | each {|i|
             mut out = ""
-            if (($i.index mod 10 == 0) and $i.index != 0) { 
+            if (($i.index mod 5 == 0) and $i.index != 0) { 
               $out ++= "</tr><tr>"
             }
             
