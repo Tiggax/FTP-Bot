@@ -106,16 +106,28 @@ jobs:
         with:
           name: results
           
-      - name: generate Summary
+      - name: Create summary file
         shell: nu {0}
         run: |
-          let data = (ls result*.nuon
+          "" | save summary.md
+          
+      - name: generate Data
+        shell: nu {0}
+        run: |
+          ls result*.nuon
           | get name
           | each {|run|
             open $run
-          })
+          }
+          | save data.nuon
+      
+      
+      - name: Create runs results table
+        shell: nu {0}
+        run: |
           
-          mut summary = ""
+          mut summary = (open summary.md --raw)
+          let data = (open data.nuon)
           
           $summary ++= "\n# Test summary\n<table>\n<tr>"
           $summary ++= ($data
@@ -126,6 +138,16 @@ jobs:
             | to md )\n</td>"
           })
           $summary ++= "</tr></table>\n\n# Data\n\n"
+
+          $summary | save summary.md --raw
+
+      
+      - name: Generate w/l graph
+        shell: nu {0}
+        run: |
+          
+          mut summary = (open summary.md --raw)
+          let data = (open data.nuon)
           
           let grouped = ($data
           | enumerate
@@ -155,10 +177,16 @@ jobs:
             let losses = (""| fill -c "░" -w (((10 - $v) / $sum ) * 120 | into int))
             $"|($k)|($wins)($losses)|($v)|(10 - $v)|"
           })
+          
+          $summary | save summary.md --raw
 
-      - name: Add raw data
+      
+      - name: add raw data
         shell: nu {0}
         run: |
+          
+          mut summary = (open summary.md --raw)
+          let data = (open data.nuon)
           
           $summary ++= ($data
           | enumerate
@@ -168,9 +196,15 @@ jobs:
             ($i.item | to md)
             "})
 
-      - name: generate summary
+          $summary | save summary.md --raw
+
+      
+      - name: Generate summary
         shell: nu {0}
         run: |
+          
+          mut summary = (open summary.md --raw)
+          let data = (open data.nuon)
           $summary 
             | str replace -a "true" ":white_check_mark:" 
             | str replace -a "false" ":x:"
