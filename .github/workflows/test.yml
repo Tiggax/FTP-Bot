@@ -148,30 +148,17 @@ jobs:
           | into record)
 
           let sum = $players | values | reduce {|v,agg| $agg + $v}
-          $summary ++= "|Player| Wins :white_check_mark:|count|\n|-|-|-|"
+          $summary ++= "|Player| Wins :white_check_mark: vs. Loses :x: |:white_check_mark: count|:x: count|\n|-|-|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 120 | into int))|($v)|"
+            let wins = (""| fill -c "█" -w (($v / $sum ) * 120 | into int))
+            let losses = (""| fill -c "░" -w (((10 - $v) / $sum ) * 120 | into int))
+            $"|($k)|($wins)($losses)|($v)|(10 - $v)|"
           })
 
-
-          let players = ($grouped
-          | where survive == false
-          | group-by STAT
-          | items {|k,v|
-           {$k: ($v | length)}
-          }
-          | into record
-          | flatten
-          | into record)
-          
-          let sum = $players | values | reduce {|v,agg| $agg + $v}
-          $summary ++= "\n\n|Player| Loses :x:|count|\n|-|-|-|"
-          $summary ++= ($players
-          | items {|k,v|
-            $"|($k)|(""| fill -c "░" -w (($v / $sum ) * 120 | into int))|($v)|"
-          })
-          
+      - name: Add raw data
+        shell: nu {0}
+        run: |
           
           $summary ++= ($data
           | enumerate
@@ -181,10 +168,14 @@ jobs:
             ($i.item | to md)
             "})
 
-            $summary 
+      - name: generate summary
+        shell: nu {0}
+        run: |
+          $summary 
             | str replace -a "true" ":white_check_mark:" 
             | str replace -a "false" ":x:"
             | save --raw summary.md
+            
       - name: export to bash env
         run: cat summary.md >>  $GITHUB_STEP_SUMMARY
 
