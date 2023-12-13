@@ -165,6 +165,7 @@ jobs:
           | flatten
           | into record)
           
+          let sum = $players | values | reduce {|v,agg| $agg + $v}
           $summary ++= "\n\n|Player| Loses :x:|\n|-|-|"
           $summary ++= ($players
           | items {|k,v|
