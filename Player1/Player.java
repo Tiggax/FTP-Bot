@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Player {
@@ -77,9 +76,6 @@ public class Player {
 	public static void getGameState() throws IOException {
 
 		//Reset data from previous turn
-		Planet.allPlanets = new ArrayList<>();
-		Fleet.allFleets = new ArrayList<>();
-
 		player.resetData();
 		teammate.resetData();
 		firstEnemy.resetData();
@@ -109,15 +105,12 @@ public class Player {
 
 				//Setup planets
 				case 'P':
-					Planet newPlanet = new Planet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
-					getPlayerByColor(tokens[6]).addPlanet(newPlanet);
+					getPlayerByColor(tokens[6]).addNewPlanet(tokens);
 					break;
 
 				//Setup fleet
 				case 'F':
-					Log.print(line + "  " + "");
-					Fleet newFleet = new Fleet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]);
-					getPlayerByColor(tokens[7]).addFleet(newFleet);
+					getPlayerByColor(tokens[7]).addNewFleet(tokens);
 					break;
 
 				//Someone died (string is not in color????????? this data is totally useless)

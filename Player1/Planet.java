@@ -1,8 +1,6 @@
-import java.util.ArrayList;
+
 
 public class Planet {
-
-    public static ArrayList<Planet> allPlanets;
 
     public int name;
 
@@ -12,25 +10,17 @@ public class Planet {
     public float size;
     public int fleetSize;
 
-    public Planet(String name, String positionX, String positionY, String size, String fleetSize) {
+    public PlayerData player;
+
+    public Planet(String name, String positionX, String positionY, String size, String fleetSize, PlayerData player) {
         this.name = Integer.parseInt(name);
         this.positionX = Integer.parseInt(positionX);
         this.positionY = Integer.parseInt(positionY);
         this.size = Float.parseFloat(size);
         this.fleetSize = Integer.parseInt(fleetSize);
+        this.player = player;
     }
 
-
-    public static Planet findPlanetByName(int name){
-
-        for (Planet obj : allPlanets) {
-            if (obj.name == name) {
-                return obj;
-            }
-        }
-        return null;
-
-    }
 
 
 }
