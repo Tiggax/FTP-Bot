@@ -148,10 +148,10 @@ jobs:
           | into record)
 
           let sum = $players | values | reduce {|v,agg| $agg + $v}
-          $summary ++= "|Player| Wins :white_check_mark:|\n|-|-|"
+          $summary ++= "|Player| Wins :white_check_mark:|count|\n|-|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|"
+            $"|($k)|(""| fill -c "█" -w (($v / $sum ) * 100 | into int))|($v)|"
           })
 
 
@@ -166,10 +166,10 @@ jobs:
           | into record)
           
           let sum = $players | values | reduce {|v,agg| $agg + $v}
-          $summary ++= "\n\n|Player| Loses :x:|\n|-|-|"
+          $summary ++= "\n\n|Player| Loses :x:|count|\n|-|-|-|"
           $summary ++= ($players
           | items {|k,v|
-            $"|($k)|(""| fill -c "░" -w (($v / $sum ) * 100 | into int))|"
+            $"|($k)|(""| fill -c "░" -w (($v / $sum ) * 100 | into int))|($v)|"
           })
           
           
