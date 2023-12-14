@@ -39,7 +39,7 @@ jobs:
     needs: generate_range
     strategy:
       matrix:
-        test: ${{ needs.generate_range.outputs.range }}
+        test: ${{ fromJson(needs.generate_range.outputs.range) }}
         
 
     steps:
