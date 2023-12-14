@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class PlayerData {
 
@@ -24,13 +25,29 @@ public class PlayerData {
     }
 
     public void addNewPlanet(String[] tokens){
-        Planet planet = new Planet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], this);
+        Planet planet = new Planet(
+                Integer.parseInt(tokens[1]),
+                Integer.parseInt(tokens[2]),
+                Integer.parseInt(tokens[3]),
+                Float.parseFloat(tokens[4]),
+                Integer.parseInt(tokens[5]),
+                this);
+
         planets.add(planet);
         planetsOfAllPlayers.add(planet);
     }
 
     public void addNewFleet(String[] tokens){
-        Fleet fleet = new Fleet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6], this);
+
+        Fleet fleet = new Fleet(
+                Integer.parseInt(tokens[1]),
+                Integer.parseInt(tokens[2]),
+                findPlanetByName(Integer.parseInt(tokens[3])),
+                findPlanetByName(Integer.parseInt(tokens[4])),
+                Integer.parseInt(tokens[5]),
+                Integer.parseInt(tokens[6]),
+                this);
+
         fleets.add(fleet);
         fleetsOfAllPlayers.add(fleet);
     }
@@ -46,5 +63,6 @@ public class PlayerData {
         return null;
 
     }
+
 
 }

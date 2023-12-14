@@ -32,18 +32,75 @@ public class Player {
 
 			while (true) {
 
+
+
 				//Get game inputs
 				getGameState();
 
+
 				//Test for attack
-				for (int i = 0; i < player.planets.size(); i++) {
+				//for (int i = 0; i < player.planets.size(); i++) {
 					//if (!teammate.planets.isEmpty())attack(player.planets.get(i).name, teammate.planets.get(0).name, 1);
-					if(turn == 2 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
-
-
-
+					//if((turn & 1) == 0 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
 					//else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
+				//}
+
+
+
+				long startTime = System.currentTimeMillis();
+
+
+				for (int i = 0; i < player.planets.size(); i++) {
+
+					GameEmulation ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
+					int withoutAttack = ge.runEmulation();
+
+					int bestScore = withoutAttack;
+					Planet originPlanet = player.planets.get(i);
+					Planet destinationPlanetBest = null;
+
+
+					for (int j = 0; j < PlayerData.planetsOfAllPlayers.size(); j++) {
+
+
+						Planet destinationPlanet = PlayerData.planetsOfAllPlayers.get(j);
+
+						if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
+
+						ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
+						int score = ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize / 2);
+
+
+						if (score > bestScore){
+							bestScore = score;
+							destinationPlanetBest = destinationPlanet;
+						}
+
+					}
+
+
+					if(bestScore > withoutAttack){
+						Log.print("Best: " + bestScore + " withoutAttack: " + withoutAttack + " Pl: " + destinationPlanetBest.name);
+						attack(originPlanet.name, destinationPlanetBest.name, originPlanet.fleetSize / 2);
+					}
+
 				}
+
+
+
+				// Record the end time
+				long endTime = System.currentTimeMillis();
+
+				// Calculate and print the elapsed time
+				long elapsedTime = endTime - startTime;
+				Log.print("Elapsed Time: " + elapsedTime + " milliseconds");
+
+
+
+
+
+				//if(turn>3)Log.print("PlayerPlanet: " + player.planets.get(0).size + " TeammatePlanet: " + teammate.planets.get(0).size);
+
 
 				//First turn we meet our teammate
 				if (turn == 0)System.out.println("M NAME " + player.color);
@@ -53,6 +110,7 @@ public class Player {
 
 				//Track turns
 				turn++;
+
 
 			}
 

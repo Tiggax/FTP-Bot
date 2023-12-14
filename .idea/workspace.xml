@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added IntelliJ configuration and resolved a Gradle compiler bug.">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="First implementation of predicting moves.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Fleet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Fleet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Planet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/PlayerData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,15 +37,27 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2ZSVfTNg9aADi8jv0MGuCxtuyWH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -53,7 +69,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Blaz/IdeaProjects/FTP-Bot/Game.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Blaz/IdeaProjects/Game&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
@@ -79,7 +95,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="Run game" type="JarApplication">
@@ -117,7 +132,25 @@
       <option name="presentableId" value="LOCAL−00001" />
       <updated>1702416082352</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL−00002" summary="Added lists that contain all planets and all fleets, and also improved the fleet planets.">
+      <created>1702498859342</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1702498859342</updated>
+    </task>
+    <task id="LOCAL−00003" summary="Moved certain functions into more appropriate classes and included player identification within fleets and planets.">
+      <created>1702500438589</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1702500438589</updated>
+    </task>
+    <task id="LOCAL−00004" summary="First implementation of predicting moves.">
+      <created>1702561786853</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1702561786853</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,6 +166,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added IntelliJ configuration and resolved a Gradle compiler bug." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added IntelliJ configuration and resolved a Gradle compiler bug." />
+    <MESSAGE value="Added lists that contain all planets and all fleets, and also improved the fleet planets." />
+    <MESSAGE value="Moved certain functions into more appropriate classes and included player identification within fleets and planets." />
+    <MESSAGE value="First implementation of predicting moves." />
+    <option name="LAST_COMMIT_MESSAGE" value="First implementation of predicting moves." />
   </component>
 </project>

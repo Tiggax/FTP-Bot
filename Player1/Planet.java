@@ -1,6 +1,6 @@
 
 
-public class Planet {
+public class Planet implements Cloneable {
 
     public int name;
 
@@ -12,15 +12,19 @@ public class Planet {
 
     public PlayerData player;
 
-    public Planet(String name, String positionX, String positionY, String size, String fleetSize, PlayerData player) {
-        this.name = Integer.parseInt(name);
-        this.positionX = Integer.parseInt(positionX);
-        this.positionY = Integer.parseInt(positionY);
-        this.size = Float.parseFloat(size);
-        this.fleetSize = Integer.parseInt(fleetSize);
+    public Planet(int name, int positionX, int positionY, float size, int fleetSize, PlayerData player) {
+        this.name = name;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.size = size;
+        this.fleetSize = fleetSize;
         this.player = player;
     }
 
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
 }
