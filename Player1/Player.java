@@ -68,7 +68,7 @@ public class Player {
 						if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
 
 						ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
-						int score = ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize / 2);
+						int score = ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
 
 
 						if (score > bestScore){
@@ -80,8 +80,7 @@ public class Player {
 
 
 					if(bestScore > withoutAttack){
-						Log.print("Best: " + bestScore + " withoutAttack: " + withoutAttack + " Pl: " + destinationPlanetBest.name);
-						attack(originPlanet.name, destinationPlanetBest.name, originPlanet.fleetSize / 2);
+						attack(originPlanet.name, destinationPlanetBest.name, (originPlanet.fleetSize / 3) * 2);
 					}
 
 				}
@@ -96,10 +95,6 @@ public class Player {
 				Log.print("Elapsed Time: " + elapsedTime + " milliseconds");
 
 
-
-
-
-				//if(turn>3)Log.print("PlayerPlanet: " + player.planets.get(0).size + " TeammatePlanet: " + teammate.planets.get(0).size);
 
 
 				//First turn we meet our teammate

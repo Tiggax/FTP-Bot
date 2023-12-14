@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="First implementation of predicting moves.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Improved prediction and optimized attacks (now there is only one big attack)">
+      <change afterPath="$PROJECT_DIR$/Player2/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player1/Fleet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Fleet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player1/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Planet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player1/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/PlayerData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/Fleet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Fleet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Planet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/PlayerData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,18 +65,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Blaz/IdeaProjects/Game&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/Blaz/IdeaProjects/FTP-Bot/Player2",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Blaz\IdeaProjects\FTP-Bot\Player2" />
+    </key>
+  </component>
   <component name="RunManager" selected="JAR Application.Run game">
     <configuration name="FTP-Bot [compileAllPlayers]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -150,7 +157,13 @@
       <option name="presentableId" value="LOCAL−00004" />
       <updated>1702561786853</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL−00005" summary="Improved prediction and optimized attacks (now there is only one big attack)">
+      <created>1702565922497</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1702565922497</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,6 +182,7 @@
     <MESSAGE value="Added lists that contain all planets and all fleets, and also improved the fleet planets." />
     <MESSAGE value="Moved certain functions into more appropriate classes and included player identification within fleets and planets." />
     <MESSAGE value="First implementation of predicting moves." />
-    <option name="LAST_COMMIT_MESSAGE" value="First implementation of predicting moves." />
+    <MESSAGE value="Improved prediction and optimized attacks (now there is only one big attack)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved prediction and optimized attacks (now there is only one big attack)" />
   </component>
 </project>

@@ -106,8 +106,6 @@ public class GameEmulation {
     }
 
 
-
-
     private void increasePlanetsFleets(Planet planet, int byTurns){
         if (planet.player == Player.neutral)return;
         planet.fleetSize += planet.size * 10 * byTurns;
@@ -116,11 +114,7 @@ public class GameEmulation {
 
     private void landFleetsToPlanet(Fleet fleet, Planet planet){
 
-        if (shouldBeAddedOnLand(fleet.player, planet.player)) {
-
-            planet.fleetSize += fleet.size;
-
-        }
+        if (fleet.player == planet.player) planet.fleetSize += fleet.size;
         else {
 
             planet.fleetSize -= fleet.size;
@@ -129,21 +123,6 @@ public class GameEmulation {
                 planet.fleetSize *= -1;
                 planet.player = fleet.player;
             }
-
         }
     }
-
-    private boolean shouldBeAddedOnLand(PlayerData first, PlayerData second){
-
-        if(first == second)return true;
-
-        if (first == Player.firstEnemy && second == Player.secondEnemy)return true;
-        if (first == Player.secondEnemy && second == Player.firstEnemy)return true;
-
-        if (first == Player.player && second == Player.teammate)return true;
-        if (first == Player.teammate && second == Player.player)return true;
-
-        return false;
-    }
-
 }

@@ -32,15 +32,70 @@ public class Player {
 
 			while (true) {
 
+
+
 				//Get game inputs
 				getGameState();
 
+
 				//Test for attack
-				for (int i = 0; i < player.planets.size(); i++) {
+				//for (int i = 0; i < player.planets.size(); i++) {
 					//if (!teammate.planets.isEmpty())attack(player.planets.get(i).name, teammate.planets.get(0).name, 1);
-					if((turn & 1) == 0 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
-					else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
+					//if((turn & 1) == 0 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
+					//else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
+				//}
+
+
+
+				long startTime = System.currentTimeMillis();
+
+
+				for (int i = 0; i < player.planets.size(); i++) {
+
+					GameEmulation ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
+					int withoutAttack = ge.runEmulation();
+
+					int bestScore = withoutAttack;
+					Planet originPlanet = player.planets.get(i);
+					Planet destinationPlanetBest = null;
+
+
+					for (int j = 0; j < PlayerData.planetsOfAllPlayers.size(); j++) {
+
+
+						Planet destinationPlanet = PlayerData.planetsOfAllPlayers.get(j);
+
+						if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
+
+						ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
+						int score = ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
+
+
+						if (score > bestScore){
+							bestScore = score;
+							destinationPlanetBest = destinationPlanet;
+						}
+
+					}
+
+
+					if(bestScore > withoutAttack){
+						attack(originPlanet.name, destinationPlanetBest.name, (originPlanet.fleetSize / 3) * 2);
+					}
+
 				}
+
+
+
+				// Record the end time
+				long endTime = System.currentTimeMillis();
+
+				// Calculate and print the elapsed time
+				long elapsedTime = endTime - startTime;
+				Log.print("Elapsed Time: " + elapsedTime + " milliseconds");
+
+
+
 
 				//First turn we meet our teammate
 				if (turn == 0)System.out.println("M NAME " + player.color);
@@ -50,6 +105,7 @@ public class Player {
 
 				//Track turns
 				turn++;
+
 
 			}
 
@@ -67,7 +123,7 @@ public class Player {
 	}
 
 	static void attack(int from, int to, int size){
-		//System.out.println("A " + from + " " + to + " " + size);
+		System.out.println("A " + from + " " + to + " " + size);
 	}
 
 	public static void getGameState() throws IOException {
@@ -86,6 +142,7 @@ public class Player {
 			String line = stdin.readLine();
 			String[] tokens = line.split(" ");
 
+
 			switch (line.charAt(0)){
 
 				//Return if it is last line
@@ -101,14 +158,12 @@ public class Player {
 
 				//Setup planets
 				case 'P':
-					Planet newPlanet = new Planet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
-					getPlayerByColor(tokens[6]).planets.add(newPlanet);
+					getPlayerByColor(tokens[6]).addNewPlanet(tokens);
 					break;
 
 				//Setup fleet
 				case 'F':
-					Fleet newFleet = new Fleet(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]);
-					getPlayerByColor(tokens[7]).fleets.add(newFleet);
+					getPlayerByColor(tokens[7]).addNewFleet(tokens);
 					break;
 
 				//Someone died (string is not in color????????? this data is totally useless)
