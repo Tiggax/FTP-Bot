@@ -99,6 +99,7 @@ jobs:
 
   generate_report:
     needs: test_game
+    if: "always()&&(needs.test_game.outputs.game_run != '[]')"
     runs-on: ubuntu-latest
 
     steps:
