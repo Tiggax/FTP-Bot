@@ -100,7 +100,6 @@ jobs:
   generate_report:
     needs: test_game
     runs-on: ubuntu-latest
-    if: ${{ needs.test_game.outputs.game_run != '[]' }}
 
     steps:
       - uses: hustcer/setup-nu@v3.8
