@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class PlayerData {
 
@@ -45,6 +46,12 @@ public class PlayerData {
         }
         return null;
 
+    }
+
+
+
+    public static void sortFleetsOfAllPlayers(){
+        fleetsOfAllPlayers.sort(Comparator.comparingDouble(o -> o.getNeededTurns()));
     }
 
 }

@@ -1,6 +1,6 @@
 
 
-public class Fleet {
+public class Fleet{
 
 
     public int name;
@@ -31,4 +31,9 @@ public class Fleet {
         this.player = player;
 
     }
+
+    public int getNeededTurns(){
+        return neededTurns - currentTurn;
+    }
+
 }

@@ -1,6 +1,6 @@
 
 
-public class Planet {
+public class Planet implements Cloneable {
 
     public int name;
 
@@ -22,5 +22,9 @@ public class Planet {
     }
 
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
 }

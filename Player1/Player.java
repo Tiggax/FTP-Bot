@@ -35,15 +35,83 @@ public class Player {
 				//Get game inputs
 				getGameState();
 
+				//Sort fleets by their distance to the destination planet, starting with the nearest
+				PlayerData.sortFleetsOfAllPlayers();
+
 				//Test for attack
-				for (int i = 0; i < player.planets.size(); i++) {
+				//for (int i = 0; i < player.planets.size(); i++) {
 					//if (!teammate.planets.isEmpty())attack(player.planets.get(i).name, teammate.planets.get(0).name, 1);
-					if(turn == 2 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
-
-
-
+					//if((turn & 1) == 0 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
 					//else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
+				//}
+
+
+
+
+
+
+
+
+				for (int i = 0; i < player.planets.size(); i++) {
+
+					int bestScore = Integer.MIN_VALUE;
+					Planet originPlanet = player.planets.get(i);
+					Planet destinationPlanetBest = null;
+
+					for (int j = 0; j < PlayerData.planetsOfAllPlayers.size(); j++) {
+
+						Planet destinationPlanet = PlayerData.planetsOfAllPlayers.get(j);
+						if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
+
+						int neededTurns = (int)(Math.sqrt((originPlanet.positionX - destinationPlanet.positionX) *
+								(originPlanet.positionX - destinationPlanet.positionX) +
+								(originPlanet.positionY - destinationPlanet.positionY) *
+								(originPlanet.positionY - destinationPlanet.positionY))) / 2;
+
+						Fleet fleet = new Fleet(Integer.MAX_VALUE + "",
+								100 + "",
+								originPlanet.name + "",
+								destinationPlanet.name + "",
+								"0",
+								neededTurns + "",
+								originPlanet.player);
+
+						PlayerData.fleetsOfAllPlayers.add(fleet);
+
+						PlayerData.sortFleetsOfAllPlayers();
+
+						GameEmulation ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 10000);
+						int score = ge.runEmulation();
+
+						PlayerData.fleetsOfAllPlayers.remove(fleet);
+
+						Log.print("Score: " + score + " FleetSize: " + PlayerData.fleetsOfAllPlayers.size() + " PlanetToAttack: " + destinationPlanet.player.color);
+
+						if (score > bestScore){
+							bestScore = score;
+							destinationPlanetBest = destinationPlanet;
+						}
+
+					}
+
+
+					if(bestScore > Integer.MIN_VALUE){
+						Log.print("Best: " + bestScore + " Pl: " + destinationPlanetBest.name);
+						attack(originPlanet.name, destinationPlanetBest.name, originPlanet.fleetSize / 2);
+					}
+
 				}
+
+
+
+
+
+
+
+
+
+				//if(turn>3)Log.print("PlayerPlanet: " + player.planets.get(0).size + " TeammatePlanet: " + teammate.planets.get(0).size);
+
 
 				//First turn we meet our teammate
 				if (turn == 0)System.out.println("M NAME " + player.color);
@@ -53,6 +121,7 @@ public class Player {
 
 				//Track turns
 				turn++;
+
 
 			}
 

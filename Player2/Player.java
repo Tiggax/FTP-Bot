@@ -67,7 +67,7 @@ public class Player {
 	}
 
 	static void attack(int from, int to, int size){
-		System.out.println("A " + from + " " + to + " " + size);
+		//System.out.println("A " + from + " " + to + " " + size);
 	}
 
 	public static void getGameState() throws IOException {
