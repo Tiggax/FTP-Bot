@@ -87,7 +87,7 @@ jobs:
         }
     - name: mark complete
       id: mark
-      run: echo "::set-output name=did_ran::${{ success() }}"
+      run: echo "::set-output name=did_ran::${{ toJson(matrix.test) }}"
 
   generate_report:
     needs: test_game
