@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added second bot.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Improved the code readability of the game emulation.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Planet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +164,13 @@
       <option name="presentableId" value="LOCAL−00006" />
       <updated>1702567853920</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL−00007" summary="Improved the code readability of the game emulation.">
+      <created>1702569102064</created>
+      <option name="number" value="LOCAL−00007" />
+      <option name="presentableId" value="LOCAL−00007" />
+      <updated>1702569102064</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +191,7 @@
     <MESSAGE value="First implementation of predicting moves." />
     <MESSAGE value="Improved prediction and optimized attacks (now there is only one big attack)" />
     <MESSAGE value="Added second bot." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added second bot." />
+    <MESSAGE value="Improved the code readability of the game emulation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved the code readability of the game emulation." />
   </component>
 </project>

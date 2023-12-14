@@ -30,7 +30,6 @@ public class GameEmulation {
     public int getScore(){
         return teamScore - enemiesScore;
     }
-
     public int getPlanets(){
         return teamPlanetsCount;
     }
@@ -42,11 +41,14 @@ public class GameEmulation {
         teamScore = -size;
 
         //Calculate attack fleet stuff
-        int neededTurns = (int)(Math.sqrt((originPlanet.positionX - destinationPlanet.positionX) *
-                               (originPlanet.positionX - destinationPlanet.positionX) +
-                               (originPlanet.positionY - destinationPlanet.positionY) *
-                               (originPlanet.positionY - destinationPlanet.positionY))) / 2;
-        Fleet attackFleet = new Fleet(Integer.MAX_VALUE, size, originPlanet, destinationPlanet, 0, neededTurns, originPlanet.player);
+        Fleet attackFleet = new Fleet(
+                Integer.MAX_VALUE,
+                size,
+                originPlanet,
+                destinationPlanet,
+                0,
+                originPlanet.turnDistance(destinationPlanet),
+                originPlanet.player);
 
         //Add attacker (it will be removed at the end)
         fleets.add(attackFleet);

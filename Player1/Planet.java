@@ -2,6 +2,8 @@
 
 public class Planet implements Cloneable {
 
+    public static final int speed = 2;
+
     public int name;
 
     public int positionX;
@@ -21,6 +23,14 @@ public class Planet implements Cloneable {
         this.player = player;
     }
 
+
+    public int turnDistance(Planet planet){
+        return (int)(Math.sqrt((positionX - planet.positionX) *
+                               (positionX - planet.positionX) +
+                               (positionY - planet.positionY) *
+                               (positionY - planet.positionY)
+        )) / speed;
+    }
 
     @Override
     public Object clone() throws CloneNotSupportedException {
