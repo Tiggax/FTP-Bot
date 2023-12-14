@@ -45,7 +45,7 @@ jobs:
           java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 out> game${{ matrix.test }}.log
         }
         
-      continue-on-error: true
+     
       
     - name: Save Game log
       uses: actions/upload-artifact@v3
