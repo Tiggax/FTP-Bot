@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Moved certain functions into more appropriate classes and included player identification within fleets and planets.">
-      <change afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="First implementation of predicting moves.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Fleet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Fleet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Planet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/PlayerData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +45,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -140,7 +144,13 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1702500438589</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="First implementation of predicting moves.">
+      <created>1702561786853</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1702561786853</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +168,7 @@
     <MESSAGE value="Added IntelliJ configuration and resolved a Gradle compiler bug." />
     <MESSAGE value="Added lists that contain all planets and all fleets, and also improved the fleet planets." />
     <MESSAGE value="Moved certain functions into more appropriate classes and included player identification within fleets and planets." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved certain functions into more appropriate classes and included player identification within fleets and planets." />
+    <MESSAGE value="First implementation of predicting moves." />
+    <option name="LAST_COMMIT_MESSAGE" value="First implementation of predicting moves." />
   </component>
 </project>

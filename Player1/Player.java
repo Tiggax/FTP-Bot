@@ -32,11 +32,11 @@ public class Player {
 
 			while (true) {
 
+
+
 				//Get game inputs
 				getGameState();
 
-				//Sort fleets by their distance to the destination planet, starting with the nearest
-				PlayerData.sortFleetsOfAllPlayers();
 
 				//Test for attack
 				//for (int i = 0; i < player.planets.size(); i++) {
@@ -47,45 +47,29 @@ public class Player {
 
 
 
-
-
-
+				long startTime = System.currentTimeMillis();
 
 
 				for (int i = 0; i < player.planets.size(); i++) {
 
-					int bestScore = Integer.MIN_VALUE;
+					GameEmulation ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
+					int withoutAttack = ge.runEmulation();
+
+					int bestScore = withoutAttack;
 					Planet originPlanet = player.planets.get(i);
 					Planet destinationPlanetBest = null;
 
+
 					for (int j = 0; j < PlayerData.planetsOfAllPlayers.size(); j++) {
 
+
 						Planet destinationPlanet = PlayerData.planetsOfAllPlayers.get(j);
+
 						if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
 
-						int neededTurns = (int)(Math.sqrt((originPlanet.positionX - destinationPlanet.positionX) *
-								(originPlanet.positionX - destinationPlanet.positionX) +
-								(originPlanet.positionY - destinationPlanet.positionY) *
-								(originPlanet.positionY - destinationPlanet.positionY))) / 2;
+						ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
+						int score = ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize / 2);
 
-						Fleet fleet = new Fleet(Integer.MAX_VALUE + "",
-								100 + "",
-								originPlanet.name + "",
-								destinationPlanet.name + "",
-								"0",
-								neededTurns + "",
-								originPlanet.player);
-
-						PlayerData.fleetsOfAllPlayers.add(fleet);
-
-						PlayerData.sortFleetsOfAllPlayers();
-
-						GameEmulation ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 10000);
-						int score = ge.runEmulation();
-
-						PlayerData.fleetsOfAllPlayers.remove(fleet);
-
-						Log.print("Score: " + score + " FleetSize: " + PlayerData.fleetsOfAllPlayers.size() + " PlanetToAttack: " + destinationPlanet.player.color);
 
 						if (score > bestScore){
 							bestScore = score;
@@ -95,8 +79,8 @@ public class Player {
 					}
 
 
-					if(bestScore > Integer.MIN_VALUE){
-						Log.print("Best: " + bestScore + " Pl: " + destinationPlanetBest.name);
+					if(bestScore > withoutAttack){
+						Log.print("Best: " + bestScore + " withoutAttack: " + withoutAttack + " Pl: " + destinationPlanetBest.name);
 						attack(originPlanet.name, destinationPlanetBest.name, originPlanet.fleetSize / 2);
 					}
 
@@ -104,7 +88,12 @@ public class Player {
 
 
 
+				// Record the end time
+				long endTime = System.currentTimeMillis();
 
+				// Calculate and print the elapsed time
+				long elapsedTime = endTime - startTime;
+				Log.print("Elapsed Time: " + elapsedTime + " milliseconds");
 
 
 

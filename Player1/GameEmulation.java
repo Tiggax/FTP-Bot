@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class GameEmulation {
@@ -10,6 +11,10 @@ public class GameEmulation {
     int turns;
 
 
+    int playerScore = 0;
+    int enemiesScore = 0;
+
+
     public GameEmulation(ArrayList<Planet> planets, ArrayList<Fleet> fleets, int turns) {
 
         this.planets = planets;
@@ -19,10 +24,40 @@ public class GameEmulation {
     }
 
 
+
+    int runEmulation(Planet originPlanet, Planet destinationPlanet, int size) throws CloneNotSupportedException {
+
+        if (originPlanet == null || destinationPlanet == null)return Integer.MIN_VALUE;
+
+        //Subtract size so that it will not be included in final score
+        playerScore = -size;
+
+        //Calculate attack fleet stuff
+        int neededTurns = (int)(Math.sqrt((originPlanet.positionX - destinationPlanet.positionX) *
+                               (originPlanet.positionX - destinationPlanet.positionX) +
+                               (originPlanet.positionY - destinationPlanet.positionY) *
+                               (originPlanet.positionY - destinationPlanet.positionY))) / 2;
+        Fleet attackFleet = new Fleet(Integer.MAX_VALUE, size, originPlanet, destinationPlanet, 0, neededTurns, originPlanet.player);
+
+        //Add attacker (it will be removed at the end)
+        fleets.add(attackFleet);
+
+        //Run emulation
+        int ret = runEmulation();
+
+        //Remove attacker
+        fleets.remove(attackFleet);
+
+
+        return ret;
+    }
+
+
+
     int runEmulation() throws CloneNotSupportedException {
 
-        int playerScore = 0;
-        int enemiesScore = 0;
+        //Sort fleets so that we can emulate them in correct order
+        fleets.sort(Comparator.comparingDouble(Fleet::getNeededTurns));
 
         //Emulate planet score by turns
         for (Planet planet : planets){
@@ -35,7 +70,6 @@ public class GameEmulation {
 
         }
 
-
         //Add fleets that still exists after x turns to score
         for (Fleet fleet : fleets) {
             if (fleet.getNeededTurns() <= turns) continue;
@@ -43,10 +77,11 @@ public class GameEmulation {
             else enemiesScore += fleet.size;
         }
 
-
         //return myPlanets;
         return playerScore - enemiesScore;
+
     }
+
 
 
     private void emulatePlanetTurn(Planet planet){
