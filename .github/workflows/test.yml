@@ -41,7 +41,7 @@ jobs:
     - name: Run Game
       shell: nu {0}
       run: |
-        if ${{ matrix.test }} == 0 {
+        if ${{ matrix.test }} == 20 {
           try { java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 out> game${{ matrix.test }}.log } catch {}
         } else {
           java -jar Game.jar --gui=false Player1 Player2 Player3 Player4 out> game${{ matrix.test }}.log
