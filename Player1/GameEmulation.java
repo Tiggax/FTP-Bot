@@ -11,8 +11,11 @@ public class GameEmulation {
     int turns;
 
 
-    int playerScore = 0;
+    int teamScore = 0;
     int enemiesScore = 0;
+
+    int teamPlanetsCount = 0;
+
 
 
     public GameEmulation(ArrayList<Planet> planets, ArrayList<Fleet> fleets, int turns) {
@@ -24,13 +27,19 @@ public class GameEmulation {
     }
 
 
+    public int getScore(){
+        return teamScore - enemiesScore;
+    }
 
-    int runEmulation(Planet originPlanet, Planet destinationPlanet, int size) throws CloneNotSupportedException {
+    public int getPlanets(){
+        return teamPlanetsCount;
+    }
 
-        if (originPlanet == null || destinationPlanet == null)return Integer.MIN_VALUE;
+
+    void runEmulation(Planet originPlanet, Planet destinationPlanet, int size) throws CloneNotSupportedException {
 
         //Subtract size so that it will not be included in final score
-        playerScore = -size;
+        teamScore = -size;
 
         //Calculate attack fleet stuff
         int neededTurns = (int)(Math.sqrt((originPlanet.positionX - destinationPlanet.positionX) *
@@ -43,18 +52,16 @@ public class GameEmulation {
         fleets.add(attackFleet);
 
         //Run emulation
-        int ret = runEmulation();
+        runEmulation();
 
         //Remove attacker
         fleets.remove(attackFleet);
 
-
-        return ret;
     }
 
 
 
-    int runEmulation() throws CloneNotSupportedException {
+    void runEmulation() throws CloneNotSupportedException {
 
         //Sort fleets so that we can emulate them in correct order
         fleets.sort(Comparator.comparingDouble(Fleet::getNeededTurns));
@@ -65,22 +72,29 @@ public class GameEmulation {
             Planet clonedPlanet = (Planet) planet.clone();
             emulatePlanetTurn(clonedPlanet);
 
-            if (clonedPlanet.player == Player.player) playerScore += clonedPlanet.fleetSize;
-            else enemiesScore += clonedPlanet.fleetSize;
+            if (isInMyTeam(clonedPlanet.player)){
+                ++teamPlanetsCount;
+                teamScore += clonedPlanet.fleetSize;
+            }
+            else {
+                enemiesScore += clonedPlanet.fleetSize;
+            }
 
         }
 
         //Add fleets that still exists after x turns to score
         for (Fleet fleet : fleets) {
             if (fleet.getNeededTurns() <= turns) continue;
-            if (fleet.player == Player.player) playerScore += fleet.size;
+            if (isInMyTeam(fleet.player)) teamScore += fleet.size;
             else enemiesScore += fleet.size;
         }
 
-        //return myPlanets;
-        return playerScore - enemiesScore;
-
     }
+
+    private boolean isInMyTeam(PlayerData player){
+        return player == Player.player || player == Player.teammate;
+    }
+
 
 
 
@@ -116,34 +130,26 @@ public class GameEmulation {
 
     private void landFleetsToPlanet(Fleet fleet, Planet planet){
 
-        if (shouldBeAddedOnLand(fleet.player, planet.player)) {
+        planet.fleetSize += fleet.size * addOrSub(fleet.player, planet.player);
 
-            planet.fleetSize += fleet.size;
-
+        if (planet.fleetSize < 0){
+            planet.fleetSize *= -1;
+            planet.player = fleet.player;
         }
-        else {
 
-            planet.fleetSize -= fleet.size;
-
-            if (planet.fleetSize < 0){
-                planet.fleetSize *= -1;
-                planet.player = fleet.player;
-            }
-
-        }
     }
 
-    private boolean shouldBeAddedOnLand(PlayerData first, PlayerData second){
+    private int addOrSub(PlayerData first, PlayerData second){
 
-        if(first == second)return true;
+        if(first == second)return 1;
 
-        if (first == Player.firstEnemy && second == Player.secondEnemy)return true;
-        if (first == Player.secondEnemy && second == Player.firstEnemy)return true;
+        if (first == Player.firstEnemy && second == Player.secondEnemy)return 1;
+        if (first == Player.secondEnemy && second == Player.firstEnemy)return 1;
 
-        if (first == Player.player && second == Player.teammate)return true;
-        if (first == Player.teammate && second == Player.player)return true;
+        if (first == Player.player && second == Player.teammate)return 1;
+        if (first == Player.teammate && second == Player.player)return 1;
 
-        return false;
+        return -1;
     }
 
 }

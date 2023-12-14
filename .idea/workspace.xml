@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Improved prediction and optimized attacks (now there is only one big attack)">
-      <change afterPath="$PROJECT_DIR$/Player2/GameEmulation.java" afterDir="false" />
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added second bot.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Fleet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Fleet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Planet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/PlayerData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +158,13 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1702565922497</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="Added second bot.">
+      <created>1702567853920</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1702567853920</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +184,7 @@
     <MESSAGE value="Moved certain functions into more appropriate classes and included player identification within fleets and planets." />
     <MESSAGE value="First implementation of predicting moves." />
     <MESSAGE value="Improved prediction and optimized attacks (now there is only one big attack)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved prediction and optimized attacks (now there is only one big attack)" />
+    <MESSAGE value="Added second bot." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added second bot." />
   </component>
 </project>

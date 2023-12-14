@@ -33,18 +33,8 @@ public class Player {
 			while (true) {
 
 
-
 				//Get game inputs
 				getGameState();
-
-
-				//Test for attack
-				//for (int i = 0; i < player.planets.size(); i++) {
-					//if (!teammate.planets.isEmpty())attack(player.planets.get(i).name, teammate.planets.get(0).name, 1);
-					//if((turn & 1) == 0 && !firstEnemy.planets.isEmpty())attack(player.planets.get(i).name, firstEnemy.planets.get(0).name, 100);
-					//else if (!secondEnemy.planets.isEmpty())attack(player.planets.get(i).name, secondEnemy.planets.get(0).name, 100);
-				//}
-
 
 
 				long startTime = System.currentTimeMillis();
@@ -53,7 +43,8 @@ public class Player {
 				for (int i = 0; i < player.planets.size(); i++) {
 
 					GameEmulation ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
-					int withoutAttack = ge.runEmulation();
+					ge.runEmulation();
+					int withoutAttack = ge.getScore();
 
 					int bestScore = withoutAttack;
 					Planet originPlanet = player.planets.get(i);
@@ -68,11 +59,11 @@ public class Player {
 						if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
 
 						ge = new GameEmulation(PlayerData.planetsOfAllPlayers, PlayerData.fleetsOfAllPlayers, 500);
-						int score = ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
+						ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
 
 
-						if (score > bestScore){
-							bestScore = score;
+						if (ge.getScore() > bestScore){
+							bestScore = ge.getScore();
 							destinationPlanetBest = destinationPlanet;
 						}
 

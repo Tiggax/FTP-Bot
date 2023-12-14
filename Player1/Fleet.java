@@ -15,7 +15,6 @@ public class Fleet{
 
     public PlayerData player;
 
-    public int turn;
 
     public Fleet(int name, int size, Planet originPlanet, Planet destinationPlanet, int currentTurn, int neededTurns, PlayerData player) {
 
