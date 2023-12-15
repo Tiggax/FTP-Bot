@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Planet implements Cloneable {
 
 
-    public static ArrayList<Planet> planetsOfAllPlayers;
+    public static ArrayList<Planet> planets;
 
     public static final int speed = 2;
 
@@ -15,9 +15,9 @@ public class Planet implements Cloneable {
     public float size;
     public int fleetSize;
 
-    public PlayerData player;
+    public Players player;
 
-    public Planet(int name, int positionX, int positionY, float size, int fleetSize, PlayerData player) {
+    public Planet(int name, int positionX, int positionY, float size, int fleetSize, Players player) {
         this.name = name;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -27,17 +27,18 @@ public class Planet implements Cloneable {
     }
 
 
-    public static Planet findPlanetByName(int name){
 
-        for (Planet obj : Planet.planetsOfAllPlayers) {
-            if (obj.name == name) {
-                return obj;
-            }
-        }
-        return null;
+    public static void addNewPlanet(String[] tokens){
+        Planet planet = new Planet(
+                Integer.parseInt(tokens[1]),
+                Integer.parseInt(tokens[2]),
+                Integer.parseInt(tokens[3]),
+                Float.parseFloat(tokens[4]),
+                Integer.parseInt(tokens[5]),
+                PlayerData.getPlayerByColor(tokens[6]));
 
+        Planet.planets.add(planet);
     }
-
 
     public int turnDistance(Planet planet){
         return (int)(Math.sqrt((positionX - planet.positionX) *
@@ -45,16 +46,6 @@ public class Planet implements Cloneable {
                                (positionY - planet.positionY) *
                                (positionY - planet.positionY)
         )) / speed;
-    }
-
-    public boolean isEnemyAbleToAttackBeforeMe(Planet planetToAttack, ArrayList<Planet> enemyPlanets){
-
-        for (Planet planet : enemyPlanets) {
-            if (planetToAttack == planet)continue;
-            if (planet.turnDistance(planetToAttack) < turnDistance(planetToAttack)) return true;
-        }
-
-        return false;
     }
 
 

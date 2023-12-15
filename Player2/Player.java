@@ -30,24 +30,10 @@ public class Player {
 
 
 
-	public static PlayerData player;
-	public static PlayerData teammate;
-
-	public static PlayerData firstEnemy;
-	public static PlayerData secondEnemy;
-
-	public static PlayerData neutral;
-
-
 	public static void main(String[] args) throws Exception {
 
 		try {
 
-			player = new PlayerData(false);
-			teammate = new PlayerData(false);
-			firstEnemy = new PlayerData(false);
-			secondEnemy = new PlayerData(false);
-			neutral = new PlayerData(true);
 
 			while (true) {
 
@@ -59,29 +45,37 @@ public class Player {
 				//We start after second turn because we don't know who is who before that
 				if(turn > 1){
 
+					for (int i = 0; i < Planet.planets.size(); i++) {
 
-					for (int i = 0; i < player.planets.size(); i++) {
-
-
-						Planet originPlanet = player.planets.get(i);
+						Planet originPlanet = Planet.planets.get(i);
+						if(originPlanet.player != Players.PLAYER)continue;
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
 
 
-						for (int j = 0; j < Planet.planetsOfAllPlayers.size(); j++) {
+						for (int j = 0; j < Planet.planets.size(); j++) {
 
-							Planet destinationPlanet = Planet.planetsOfAllPlayers.get(j);
+							Planet destinationPlanet = Planet.planets.get(j);
 
-							if (destinationPlanet.player == player || destinationPlanet.player == teammate)continue;
+							//Remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							if (destinationPlanet.player == Players.PLAYER || destinationPlanet.player == Players.TEAMMATE)continue;
 
-							GameEmulation ge = new GameEmulation(Planet.planetsOfAllPlayers, Fleet.fleetsOfAllPlayers, 500);
+							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
 							ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
 
 
-							boolean canBeAttackByOthers =
-									originPlanet.isEnemyAbleToAttackBeforeMe(destinationPlanet, firstEnemy.planets) ||
-									originPlanet.isEnemyAbleToAttackBeforeMe(destinationPlanet, secondEnemy.planets);
+							boolean canBeAttackByOthers = false;
 
+							for (Planet planet : Planet.planets) {
+
+								if (PlayerData.isInMyTeam(planet.player))continue;
+								if (planet.player == destinationPlanet.player) continue;
+
+								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)){
+									canBeAttackByOthers = true;
+									break;
+								}
+							}
 
 							attackOrder.add(0, new AttackOrder(destinationPlanet, ge.getScore(), canBeAttackByOthers));
 
@@ -90,13 +84,12 @@ public class Player {
 
 
 						//Run emulation without fleets
-						GameEmulation ge = new GameEmulation(Planet.planetsOfAllPlayers, Fleet.fleetsOfAllPlayers, 500);
+						GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
 						ge.runEmulation();
 						AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), false);
 
 						//Go true data and decide what to attack
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
-
 
 						if (withoutAttack.score < attackOrder.get(attackOrder.size() - 1).score){
 
@@ -115,20 +108,13 @@ public class Player {
 
 								}
 
-
 							}
 
-
-
-
 						}
-
-
 
 					}
 
 				}
-
 
 
 
@@ -140,10 +126,8 @@ public class Player {
 				Log.print("Elapsed Time: " + elapsedTime + " milliseconds");
 
 
-
-
 				//First turn we meet our teammate
-				if (turn == 0)System.out.println("M NAME " + player.color);
+				if (turn == 0)System.out.println("M NAME " + PlayerData.getPlayerColor(Players.PLAYER));
 
 				//Sending done
 				System.out.println("E");
@@ -174,11 +158,8 @@ public class Player {
 	public static void getGameState() throws IOException {
 
 		//Reset data from previous turn
-		player.resetData();
-		teammate.resetData();
-		firstEnemy.resetData();
-		secondEnemy.resetData();
-		neutral.resetData();
+		Planet.planets = new ArrayList<>();
+		Fleet.fleets = new ArrayList<>();
 
 		BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
 
@@ -198,17 +179,17 @@ public class Player {
 				case 'U':
 					universeWidth = Integer.parseInt(tokens[1]);
 					universeHeight = Integer.parseInt(tokens[2]);
-					player.color = tokens[3];
+					PlayerData.setColor(Players.PLAYER, tokens[3]);
 					break;
 
 				//Setup planets
 				case 'P':
-					getPlayerByColor(tokens[6]).addNewPlanet(tokens);
+					Planet.addNewPlanet(tokens);
 					break;
 
 				//Setup fleet
 				case 'F':
-					getPlayerByColor(tokens[7]).addNewFleet(tokens);
+					Fleet.addNewFleet(tokens);
 					break;
 
 				//Someone died (string is not in color????????? this data is totally useless)
@@ -229,34 +210,28 @@ public class Player {
 
 
 
-	static PlayerData getPlayerByColor(String color){
 
-		if (Objects.equals(player.color, color))return player;
-		else if (Objects.equals(teammate.color, color))return teammate;
-		else if (Objects.equals(firstEnemy.color, color))return firstEnemy;
-		else if (Objects.equals(secondEnemy.color, color))return secondEnemy;
-		else return neutral;
-
-	}
-
-
-	//This functions setup teammate and also finds who is enemy
+	//This functions setup teammate and also finds who are enemies
 	static void setTeammateAndEnemies(String teammateColor){
 
-		teammate.color = teammateColor;
+		PlayerData.setColor(Players.TEAMMATE, teammateColor);
 
 		//Find enemies
 		for (String color : PlayerData.possibleColors) {
 
 			if (
-				Objects.equals(color, teammate.color)   ||
-				Objects.equals(color, player.color)     ||
-				Objects.equals(color, neutral.color)    ||
-				Objects.equals(color, firstEnemy.color)
+				Objects.equals(color, PlayerData.getPlayerColor(Players.TEAMMATE))   ||
+				Objects.equals(color, PlayerData.getPlayerColor(Players.PLAYER))     ||
+				Objects.equals(color, PlayerData.getPlayerColor(Players.NEUTRAL))    ||
+				Objects.equals(color, PlayerData.getPlayerColor(Players.FIRST_ENEMY))
 			)continue;
 
-			if (Objects.equals(firstEnemy.color, "")) firstEnemy.color = color;
-			else if (Objects.equals(secondEnemy.color, "")) secondEnemy.color = color;
+			if (PlayerData.getPlayerColor(Players.FIRST_ENEMY) == null){
+				PlayerData.setColor(Players.FIRST_ENEMY, color);
+			}
+			else if (PlayerData.getPlayerColor(Players.SECOND_ENEMY) == null){
+				PlayerData.setColor(Players.SECOND_ENEMY, color);
+			}
 			else break;
 
 		}

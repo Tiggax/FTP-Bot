@@ -1,76 +1,59 @@
-import java.util.ArrayList;
+import java.util.Objects;
 
 
 enum Players{
 
-    NEUTRAL,
-    ME,
+    PLAYER,
     TEAMMATE,
     FIRST_ENEMY,
-    SECOND_ENEMY
-
+    SECOND_ENEMY,
+    NEUTRAL
 }
+
+
 
 public class PlayerData {
 
 
-    public static String[] possibleColors = {"blue", "cyan", "green", "yellow", "null"};
+    public static final String[] possibleColors = {"blue", "cyan", "green", "yellow", "null"};
 
 
+    private static final Players[] players = Players.values();
+    private static final String[] playersColor = new String[players.length];
 
 
-
-    public String color = "";
-
-
-    public ArrayList<Planet> planets;
-    public ArrayList<Fleet> fleets;
-
-    public void resetData() {
-        planets = new ArrayList<>();
-        fleets = new ArrayList<>();
-        Planet.planetsOfAllPlayers = new ArrayList<>();
-        Fleet.fleetsOfAllPlayers = new ArrayList<>();
+    public static void setColor(Players player, String color){
+        playersColor[player.ordinal()] = color;
     }
 
-    public PlayerData(boolean neutral) {
-        if (neutral) color = possibleColors[possibleColors.length - 1];
+    public static Players getPlayerByColor(String color){
+
+        for (int i = 0; i < players.length; i++) {
+            if (Objects.equals(playersColor[i], color))return players[i];
+        }
+
+        return players[Players.NEUTRAL.ordinal()];
+
     }
 
-    public void addNewPlanet(String[] tokens){
-        Planet planet = new Planet(
-                Integer.parseInt(tokens[1]),
-                Integer.parseInt(tokens[2]),
-                Integer.parseInt(tokens[3]),
-                Float.parseFloat(tokens[4]),
-                Integer.parseInt(tokens[5]),
-                this);
 
-        planets.add(planet);
-        Planet.planetsOfAllPlayers.add(planet);
+    static String getPlayerColor(Players player){
+        return playersColor[player.ordinal()];
     }
 
-    public void addNewFleet(String[] tokens){
 
-        Fleet fleet = new Fleet(
-                Integer.parseInt(tokens[1]),
-                Integer.parseInt(tokens[2]),
-                Planet.findPlanetByName(Integer.parseInt(tokens[3])),
-                Planet.findPlanetByName(Integer.parseInt(tokens[4])),
-                Integer.parseInt(tokens[5]),
-                Integer.parseInt(tokens[6]),
-                this);
-
-        fleets.add(fleet);
-        Fleet.fleetsOfAllPlayers.add(fleet);
+    public static boolean isInMyTeam(Players player){
+        return player == Players.PLAYER || player == Players.TEAMMATE;
     }
 
 
 
 
 
-    public boolean isInMyTeam(){
-        return this == Player.player || this == Player.teammate;
-    }
+
+
+
+
+
 
 }

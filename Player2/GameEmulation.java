@@ -39,8 +39,8 @@ public class GameEmulation {
         Fleet attackFleet = new Fleet(
                 Integer.MAX_VALUE,
                 size,
-                originPlanet,
-                destinationPlanet,
+                originPlanet.name,
+                destinationPlanet.name,
                 0,
                 originPlanet.turnDistance(destinationPlanet),
                 originPlanet.player);
@@ -69,7 +69,7 @@ public class GameEmulation {
             Planet clonedPlanet = (Planet) planet.clone();
             emulatePlanetTurn(clonedPlanet);
 
-            if (clonedPlanet.player.isInMyTeam())teamScore += clonedPlanet.fleetSize;
+            if (PlayerData.isInMyTeam(clonedPlanet.player))teamScore += clonedPlanet.fleetSize;
             else enemiesScore += clonedPlanet.fleetSize;
 
         }
@@ -77,7 +77,7 @@ public class GameEmulation {
         //Add fleets that still exists after x turns to score
         for (Fleet fleet : fleets) {
             if (fleet.getNeededTurns() <= turns) continue;
-            if (fleet.player.isInMyTeam()) teamScore += fleet.size;
+            if (PlayerData.isInMyTeam(fleet.player)) teamScore += fleet.size;
             else enemiesScore += fleet.size;
         }
 
@@ -95,7 +95,7 @@ public class GameEmulation {
         for (Fleet fleet : fleets) {
 
             if (fleet.getNeededTurns() > turns) break;
-            if (fleet.destinationPlanet.name != planet.name) continue;
+            if (fleet.destinationPlanet != planet.name) continue;
 
             int currentTurn = fleet.getNeededTurns();
 
@@ -113,7 +113,7 @@ public class GameEmulation {
 
 
     private void increasePlanetsFleets(Planet planet, int byTurns){
-        if (planet.player == Player.neutral)return;
+        if (planet.player == Players.NEUTRAL)return;
         planet.fleetSize += planet.size * 10 * byTurns;
     }
 
@@ -129,15 +129,15 @@ public class GameEmulation {
 
     }
 
-    private int addOrSub(PlayerData first, PlayerData second){
+    private int addOrSub(Players first, Players second){
 
         if(first == second)return 1;
 
-        if (first == Player.firstEnemy && second == Player.secondEnemy)return 1;
-        if (first == Player.secondEnemy && second == Player.firstEnemy)return 1;
+        if (first == Players.FIRST_ENEMY && second == Players.SECOND_ENEMY)return 1;
+        if (first == Players.SECOND_ENEMY && second == Players.FIRST_ENEMY)return 1;
 
-        if (first == Player.player && second == Player.teammate)return 1;
-        if (first == Player.teammate && second == Player.player)return 1;
+        if (first == Players.PLAYER && second == Players.TEAMMATE)return 1;
+        if (first == Players.TEAMMATE && second == Players.PLAYER)return 1;
 
         return -1;
     }
