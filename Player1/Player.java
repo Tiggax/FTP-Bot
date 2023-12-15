@@ -38,19 +38,25 @@ public class Player {
 			while (true) {
 
 				//Get game inputs
+
+
 				getGameState();
+
+
+
 
 				long startTime = System.currentTimeMillis();
 
 				//We start after second turn because we don't know who is who before that
-				if(turn > 1){
+				if (turn > 1) {
 
 					for (int i = 0; i < Planet.planets.size(); i++) {
 
 						Planet originPlanet = Planet.planets.get(i);
-						if(originPlanet.player != Players.PLAYER)continue;
+						if (originPlanet.player != Players.PLAYER) continue;
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
+
 
 
 						for (int j = 0; j < Planet.planets.size(); j++) {
@@ -58,20 +64,22 @@ public class Player {
 							Planet destinationPlanet = Planet.planets.get(j);
 
 							//Remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							if (destinationPlanet.player == Players.PLAYER || destinationPlanet.player == Players.TEAMMATE)continue;
+							if (destinationPlanet.player == Players.PLAYER) continue;
+							if (destinationPlanet.player == Players.TEAMMATE) continue;
+
 
 							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
-							ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
+							ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize - 1);
 
 
 							boolean canBeAttackByOthers = false;
 
 							for (Planet planet : Planet.planets) {
 
-								if (PlayerData.isInMyTeam(planet.player))continue;
+								if (PlayerData.isInMyTeam(planet.player)) continue;
 								if (planet.player == destinationPlanet.player) continue;
 
-								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)){
+								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) {
 									canBeAttackByOthers = true;
 									break;
 								}
@@ -81,9 +89,12 @@ public class Player {
 
 						}
 
+						if (attackOrder.isEmpty())continue;
+
 
 
 						//Run emulation without fleets
+
 						GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
 						ge.runEmulation();
 						AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), false);
@@ -91,20 +102,28 @@ public class Player {
 						//Go true data and decide what to attack
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
 
-						if (withoutAttack.score < attackOrder.get(attackOrder.size() - 1).score){
+
+						if (withoutAttack.score < attackOrder.get(attackOrder.size() - 1).score) {
 
 							for (int j = attackOrder.size() - 1; j >= 0; j--) {
 
 								AttackOrder attack = attackOrder.get(j);
 
-								if (!attack.canBeAttackByOthers){
-									attack(originPlanet.name, attack.planet.name, (originPlanet.fleetSize / 3) * 2);
-									break;
+
+								if (withoutAttack.score < attack.score) {
+
+									if (!attack.canBeAttackByOthers) {
+										attack(originPlanet.name, attack.planet.name, originPlanet.fleetSize - 1);
+										break;
+									}
+
 								}
 
-								if (j == 0){
+
+								if (j == 0) {
+
 									attack = attackOrder.get(attackOrder.size() - 1);
-									attack(originPlanet.name, attack.planet.name, (originPlanet.fleetSize / 3) * 2);
+									attack(originPlanet.name, attack.planet.name, originPlanet.fleetSize - 1);
 
 								}
 
@@ -115,7 +134,6 @@ public class Player {
 					}
 
 				}
-
 
 
 				// Record the end time
@@ -142,6 +160,19 @@ public class Player {
 
 			Log.print("ERROR: ");
 			Log.print(e.getMessage());
+
+
+			for (int i = 0; i < e.getStackTrace().length; i++) {
+				//Log.print(e.getStackTrace()[0].getLineNumber() + "");
+				//Log.print(e.getStackTrace()[0].getClassName() + "");
+				//Log.print(e.getStackTrace()[0].getClassLoaderName() + "");
+				//Log.print(e.getStackTrace()[0].getFileName() + "");
+				//Log.print(e.getStackTrace()[0].getMethodName() + "");
+				//Log.print(e.getStackTrace()[0].getModuleName() + "");
+				//Log.print(e.getStackTrace()[0].getModuleVersion() + "");
+			}
+
+
 			e.printStackTrace();
 
 		}
