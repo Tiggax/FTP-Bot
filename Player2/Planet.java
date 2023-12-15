@@ -1,6 +1,11 @@
-
+import java.util.ArrayList;
 
 public class Planet implements Cloneable {
+
+
+    public static ArrayList<Planet> planetsOfAllPlayers;
+
+    public static final int speed = 2;
 
     public int name;
 
@@ -19,6 +24,37 @@ public class Planet implements Cloneable {
         this.size = size;
         this.fleetSize = fleetSize;
         this.player = player;
+    }
+
+
+    public static Planet findPlanetByName(int name){
+
+        for (Planet obj : Planet.planetsOfAllPlayers) {
+            if (obj.name == name) {
+                return obj;
+            }
+        }
+        return null;
+
+    }
+
+
+    public int turnDistance(Planet planet){
+        return (int)(Math.sqrt((positionX - planet.positionX) *
+                               (positionX - planet.positionX) +
+                               (positionY - planet.positionY) *
+                               (positionY - planet.positionY)
+        )) / speed;
+    }
+
+    public boolean isEnemyAbleToAttackBeforeMe(Planet planetToAttack, ArrayList<Planet> enemyPlanets){
+
+        for (Planet planet : enemyPlanets) {
+            if (planetToAttack == planet)continue;
+            if (planet.turnDistance(planetToAttack) < turnDistance(planetToAttack)) return true;
+        }
+
+        return false;
     }
 
 

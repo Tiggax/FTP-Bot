@@ -1,14 +1,27 @@
 import java.util.ArrayList;
-import java.util.Comparator;
+
+
+enum Players{
+
+    NEUTRAL,
+    ME,
+    TEAMMATE,
+    FIRST_ENEMY,
+    SECOND_ENEMY
+
+}
 
 public class PlayerData {
 
+
     public static String[] possibleColors = {"blue", "cyan", "green", "yellow", "null"};
+
+
+
+
 
     public String color = "";
 
-    public static ArrayList<Planet> planetsOfAllPlayers;
-    public static ArrayList<Fleet> fleetsOfAllPlayers;
 
     public ArrayList<Planet> planets;
     public ArrayList<Fleet> fleets;
@@ -16,8 +29,8 @@ public class PlayerData {
     public void resetData() {
         planets = new ArrayList<>();
         fleets = new ArrayList<>();
-        planetsOfAllPlayers = new ArrayList<>();
-        fleetsOfAllPlayers = new ArrayList<>();
+        Planet.planetsOfAllPlayers = new ArrayList<>();
+        Fleet.fleetsOfAllPlayers = new ArrayList<>();
     }
 
     public PlayerData(boolean neutral) {
@@ -34,7 +47,7 @@ public class PlayerData {
                 this);
 
         planets.add(planet);
-        planetsOfAllPlayers.add(planet);
+        Planet.planetsOfAllPlayers.add(planet);
     }
 
     public void addNewFleet(String[] tokens){
@@ -42,27 +55,22 @@ public class PlayerData {
         Fleet fleet = new Fleet(
                 Integer.parseInt(tokens[1]),
                 Integer.parseInt(tokens[2]),
-                findPlanetByName(Integer.parseInt(tokens[3])),
-                findPlanetByName(Integer.parseInt(tokens[4])),
+                Planet.findPlanetByName(Integer.parseInt(tokens[3])),
+                Planet.findPlanetByName(Integer.parseInt(tokens[4])),
                 Integer.parseInt(tokens[5]),
                 Integer.parseInt(tokens[6]),
                 this);
 
         fleets.add(fleet);
-        fleetsOfAllPlayers.add(fleet);
+        Fleet.fleetsOfAllPlayers.add(fleet);
     }
 
 
-    public static Planet findPlanetByName(int name){
 
-        for (Planet obj : planetsOfAllPlayers) {
-            if (obj.name == name) {
-                return obj;
-            }
-        }
-        return null;
 
+
+    public boolean isInMyTeam(){
+        return this == Player.player || this == Player.teammate;
     }
-
 
 }

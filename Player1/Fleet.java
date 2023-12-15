@@ -1,6 +1,10 @@
-
+import java.util.ArrayList;
 
 public class Fleet{
+
+
+    public static ArrayList<Fleet> fleetsOfAllPlayers;
+
 
 
     public int name;

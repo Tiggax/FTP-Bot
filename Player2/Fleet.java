@@ -1,6 +1,10 @@
-
+import java.util.ArrayList;
 
 public class Fleet{
+
+
+    public static ArrayList<Fleet> fleetsOfAllPlayers;
+
 
 
     public int name;
@@ -15,7 +19,6 @@ public class Fleet{
 
     public PlayerData player;
 
-    public int turn;
 
     public Fleet(int name, int size, Planet originPlanet, Planet destinationPlanet, int currentTurn, int neededTurns, PlayerData player) {
 

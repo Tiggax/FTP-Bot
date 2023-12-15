@@ -14,8 +14,6 @@ public class GameEmulation {
     int teamScore = 0;
     int enemiesScore = 0;
 
-    int teamPlanetsCount = 0;
-
 
 
     public GameEmulation(ArrayList<Planet> planets, ArrayList<Fleet> fleets, int turns) {
@@ -29,9 +27,6 @@ public class GameEmulation {
 
     public int getScore(){
         return teamScore - enemiesScore;
-    }
-    public int getPlanets(){
-        return teamPlanetsCount;
     }
 
 
@@ -74,28 +69,21 @@ public class GameEmulation {
             Planet clonedPlanet = (Planet) planet.clone();
             emulatePlanetTurn(clonedPlanet);
 
-            if (isInMyTeam(clonedPlanet.player)){
-                ++teamPlanetsCount;
-                teamScore += clonedPlanet.fleetSize;
-            }
-            else {
-                enemiesScore += clonedPlanet.fleetSize;
-            }
+            if (clonedPlanet.player.isInMyTeam())teamScore += clonedPlanet.fleetSize;
+            else enemiesScore += clonedPlanet.fleetSize;
 
         }
 
         //Add fleets that still exists after x turns to score
         for (Fleet fleet : fleets) {
             if (fleet.getNeededTurns() <= turns) continue;
-            if (isInMyTeam(fleet.player)) teamScore += fleet.size;
+            if (fleet.player.isInMyTeam()) teamScore += fleet.size;
             else enemiesScore += fleet.size;
         }
 
     }
 
-    private boolean isInMyTeam(PlayerData player){
-        return player == Player.player || player == Player.teammate;
-    }
+
 
 
 
