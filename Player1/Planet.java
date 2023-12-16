@@ -6,6 +6,8 @@ public class Planet implements Cloneable {
     public static ArrayList<Planet> planets;
 
     public static final int speed = 2;
+    public static final int fleetSizeIncreaseByTurn = 10;
+
 
     public int name;
 
@@ -46,6 +48,10 @@ public class Planet implements Cloneable {
                                (positionY - planet.positionY) *
                                (positionY - planet.positionY)
         )) / speed;
+    }
+
+    public int getFleetSize(int turns){
+        return (int)(turns * fleetSizeIncreaseByTurn * size + fleetSize);
     }
 
 

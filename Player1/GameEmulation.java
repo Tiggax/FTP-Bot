@@ -101,9 +101,9 @@ public class GameEmulation {
 
 
 
-    private void increasePlanetsFleets(Planet planet, int byTurns){
+    private void increasePlanetsFleets(Planet planet, int turns){
         if (planet.player == Players.NEUTRAL)return;
-        planet.fleetSize += planet.size * 10 * byTurns;
+        planet.fleetSize = planet.getFleetSize(turns);
     }
 
 

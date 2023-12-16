@@ -112,7 +112,7 @@ public class Player {
 
 								attackFleet = new Fleet(
 										Integer.MAX_VALUE,
-										(int)((mid * 10 * originPlanet.size + originPlanet.fleetSize) * maxAttackRatio),
+										(int)(originPlanet.getFleetSize(mid) * maxAttackRatio),
 										originPlanet.name,
 										destinationPlanet.name,
 										-mid,

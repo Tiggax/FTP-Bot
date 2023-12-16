@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Optimized slow code">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added getFleetSize functions in planet to get fleet size for x turns.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Planet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player3/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player3/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player4/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player4/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,7 +231,13 @@
       <option name="presentableId" value="LOCAL−00017" />
       <updated>1702732192316</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL−00018" summary="Added some parameters">
+      <created>1702733842620</created>
+      <option name="number" value="LOCAL−00018" />
+      <option name="presentableId" value="LOCAL−00018" />
+      <updated>1702733842620</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -264,6 +269,8 @@
     <MESSAGE value="Added attack wanting if this will generate better score." />
     <MESSAGE value="Fixed max attack size bug and changed variable type AttackOrder.canBeAttackByOthers." />
     <MESSAGE value="Optimized slow code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimized slow code" />
+    <MESSAGE value="Added some parameters" />
+    <MESSAGE value="Added getFleetSize functions in planet to get fleet size for x turns." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added getFleetSize functions in planet to get fleet size for x turns." />
   </component>
 </project>
