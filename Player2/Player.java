@@ -39,7 +39,7 @@ public class Player {
 	public static int universeHeight;
 
 
-	private static final float maxAttackRatio = 2.0f / 3.0f;
+	private static final float maxAttackRatio = 1.0f;
 	private static final int emulateTurns = 500;
 	private static final int emulateAttackTime = 256;
 
@@ -56,8 +56,6 @@ public class Player {
 
 
 				getGameState();
-
-
 
 
 				long startTime = System.currentTimeMillis();
@@ -93,7 +91,7 @@ public class Player {
 							//Code has tree optimization because it takes loot of time (it was optimized with chat)
 							Fleet attackFleet = new Fleet(
 									Integer.MAX_VALUE,
-									(int)(originPlanet.fleetSize * maxAttackRatio),
+									(int)(originPlanet.fleetSize * maxAttackRatio) - 1,
 									originPlanet.name,
 									destinationPlanet.name,
 									0,
@@ -112,7 +110,7 @@ public class Player {
 
 								attackFleet = new Fleet(
 										Integer.MAX_VALUE,
-										(int)((mid * 10 * originPlanet.size + originPlanet.fleetSize) * maxAttackRatio),
+										(int)(originPlanet.getFleetSize(mid) * maxAttackRatio) - 1,
 										originPlanet.name,
 										destinationPlanet.name,
 										-mid,
@@ -130,7 +128,7 @@ public class Player {
 								}
 							}
 
-							attackOrder.add(0, bestAttackResult);
+							attackOrder.add(bestAttackResult);
 
 						}
 
@@ -230,7 +228,7 @@ public class Player {
 
 		//Check if attack can be done
 		if (0 > fleet.currentTurn)return;
-		if (originPlanet.fleetSize * maxAttackRatio < fleet.size)return;
+		if (originPlanet.fleetSize < fleet.size)return;
 
 		originPlanet.fleetSize -= fleet.size;
 		Fleet.fleets.add(fleet);

@@ -39,8 +39,9 @@ public class Player {
 	public static int universeHeight;
 
 
-	private static final float maxAttackRatio = 2.0f / 3.0f;
-	private static final int simulateTurns = 500;
+	private static final float maxAttackRatio = 1.0f;
+	private static final int emulateTurns = 500;
+	private static final int emulateAttackTime = 256;
 
 
 
@@ -56,9 +57,7 @@ public class Player {
 
 				getGameState();
 
-
-
-
+				
 				long startTime = System.currentTimeMillis();
 
 				//We start after second turn because we don't know who is who before that
@@ -92,33 +91,33 @@ public class Player {
 							//Code has tree optimization because it takes loot of time (it was optimized with chat)
 							Fleet attackFleet = new Fleet(
 									Integer.MAX_VALUE,
-									(int)(originPlanet.fleetSize * maxAttackRatio),
+									(int)(originPlanet.fleetSize * maxAttackRatio) - 1,
 									originPlanet.name,
 									destinationPlanet.name,
 									0,
 									originPlanet.turnDistance(destinationPlanet),
 									originPlanet.player);
 
-							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, simulateTurns);
+							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, emulateTurns);
 							ge.runEmulation(attackFleet);
 							AttackOrder bestAttackResult = new AttackOrder(destinationPlanet, ge.getScore(), canBeAttackByOthers, attackFleet);;
 
 							int low = 1;
-							int high = 256;
+							int high = emulateAttackTime;
 
 							while (low <= high) {
 								int mid = (low + high) / 2;
 
 								attackFleet = new Fleet(
 										Integer.MAX_VALUE,
-										(int)((mid * 10 * originPlanet.size + originPlanet.fleetSize) * maxAttackRatio),
+										(int)(originPlanet.getFleetSize(mid) * maxAttackRatio) - 1,
 										originPlanet.name,
 										destinationPlanet.name,
 										-mid,
 										originPlanet.turnDistance(destinationPlanet),
 										originPlanet.player);
 
-								ge = new GameEmulation(Planet.planets, Fleet.fleets, simulateTurns);
+								ge = new GameEmulation(Planet.planets, Fleet.fleets, emulateTurns);
 								ge.runEmulation(attackFleet);
 
 								if (ge.getScore() > bestAttackResult.score) {
@@ -129,7 +128,7 @@ public class Player {
 								}
 							}
 
-							attackOrder.add(0, bestAttackResult);
+							attackOrder.add(bestAttackResult);
 
 						}
 
@@ -139,7 +138,7 @@ public class Player {
 
 
 						//Run emulation without fleets (we need this to compare it with attacks)
-						GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, simulateTurns);
+						GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, emulateTurns);
 						ge.runEmulation();
 						AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), 0, null);
 
