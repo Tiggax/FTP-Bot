@@ -47,7 +47,6 @@ public class GameEmulation {
     }
 
 
-
     void runEmulation() throws CloneNotSupportedException {
 
         //Sort fleets so that we can emulate them in correct order

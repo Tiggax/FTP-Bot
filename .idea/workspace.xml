@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added attack wanting if this will generate better score.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Fixed max attack size bug and changed variable type AttackOrder.canBeAttackByOthers.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player3/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player3/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player4/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player4/Player.java" afterDir="false" />
@@ -220,7 +222,13 @@
       <option name="presentableId" value="LOCAL−00015" />
       <updated>1702722351608</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL−00016" summary="Fixed max attack size bug and changed variable type AttackOrder.canBeAttackByOthers.">
+      <created>1702726582861</created>
+      <option name="number" value="LOCAL−00016" />
+      <option name="presentableId" value="LOCAL−00016" />
+      <updated>1702726582861</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -250,6 +258,7 @@
     <MESSAGE value="Fixed multiple attacks bug on same planet by same team." />
     <MESSAGE value="Added player synchronization support." />
     <MESSAGE value="Added attack wanting if this will generate better score." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added attack wanting if this will generate better score." />
+    <MESSAGE value="Fixed max attack size bug and changed variable type AttackOrder.canBeAttackByOthers." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed max attack size bug and changed variable type AttackOrder.canBeAttackByOthers." />
   </component>
 </project>
