@@ -11,10 +11,14 @@ class AttackOrder{
 	public int score;
 	public boolean canBeAttackByOthers;
 
-	public AttackOrder(Planet planet, int score, boolean canBeAttackByOthers) {
+	public Fleet fleet;
+
+
+	public AttackOrder(Planet planet, int score, boolean canBeAttackByOthers, Fleet fleet) {
 		this.planet = planet;
 		this.score = score;
 		this.canBeAttackByOthers = canBeAttackByOthers;
+		this.fleet = fleet;
 	}
 
 	public float getScore() {
@@ -62,14 +66,18 @@ public class Player {
 						for (int j = 0; j < Planet.planets.size(); j++) {
 
 							Planet destinationPlanet = Planet.planets.get(j);
-
-							//Remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							if (destinationPlanet.player == Players.PLAYER) continue;
-							if (destinationPlanet.player == Players.TEAMMATE) continue;
-
-
 							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
-							ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize - 1);
+
+							Fleet attackFleet = new Fleet(
+									Integer.MAX_VALUE,
+									originPlanet.fleetSize - 1,
+									originPlanet.name,
+									destinationPlanet.name,
+									0,
+									originPlanet.turnDistance(destinationPlanet),
+									originPlanet.player);
+
+							ge.runEmulation(attackFleet);
 
 
 							boolean canBeAttackByOthers = false;
@@ -85,19 +93,18 @@ public class Player {
 								}
 							}
 
-							attackOrder.add(0, new AttackOrder(destinationPlanet, ge.getScore(), canBeAttackByOthers));
+							attackOrder.add(0, new AttackOrder(destinationPlanet, ge.getScore(), canBeAttackByOthers, attackFleet));
 
 						}
+
 
 						if (attackOrder.isEmpty())continue;
 
 
-
 						//Run emulation without fleets
-
 						GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
 						ge.runEmulation();
-						AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), false);
+						AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), false, null);
 
 						//Go true data and decide what to attack
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
@@ -113,7 +120,7 @@ public class Player {
 								if (withoutAttack.score < attack.score) {
 
 									if (!attack.canBeAttackByOthers) {
-										attack(originPlanet.name, attack.planet.name, originPlanet.fleetSize - 1);
+										attack(attack.fleet);
 										break;
 									}
 
@@ -123,7 +130,7 @@ public class Player {
 								if (j == 0) {
 
 									attack = attackOrder.get(attackOrder.size() - 1);
-									attack(originPlanet.name, attack.planet.name, originPlanet.fleetSize - 1);
+									attack(attack.fleet);
 
 								}
 
@@ -182,8 +189,8 @@ public class Player {
 
 	}
 
-	static void attack(int from, int to, int size){
-		System.out.println("A " + from + " " + to + " " + size);
+	static void attack(Fleet attack){
+		System.out.println("A " + attack.originPlanet + " " + attack.destinationPlanet + " " + attack.size);
 	}
 
 	public static void getGameState() throws IOException {

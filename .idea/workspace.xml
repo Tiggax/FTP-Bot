@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Fixed an index out-of-bounds bug and adjusted the maximum attack army.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added teammate help.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player3/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player3/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player4/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player4/Player.java" afterDir="false" />
@@ -196,7 +198,13 @@
       <option name="presentableId" value="LOCAL−00011" />
       <updated>1702683443126</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL−00012" summary="Added teammate help.">
+      <created>1702685055496</created>
+      <option name="number" value="LOCAL−00012" />
+      <option name="presentableId" value="LOCAL−00012" />
+      <updated>1702685055496</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -222,6 +230,7 @@
     <MESSAGE value="Attack now checks if enemy can attack planet before him." />
     <MESSAGE value="Refactoring whole code." />
     <MESSAGE value="Fixed an index out-of-bounds bug and adjusted the maximum attack army." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed an index out-of-bounds bug and adjusted the maximum attack army." />
+    <MESSAGE value="Added teammate help." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added teammate help." />
   </component>
 </project>

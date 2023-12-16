@@ -30,20 +30,10 @@ public class GameEmulation {
     }
 
 
-    void runEmulation(Planet originPlanet, Planet destinationPlanet, int size) throws CloneNotSupportedException {
+    void runEmulation(Fleet attackFleet) throws CloneNotSupportedException {
 
         //Subtract size so that it will not be included in final score
-        teamScore = -size;
-
-        //Calculate attack fleet stuff
-        Fleet attackFleet = new Fleet(
-                Integer.MAX_VALUE,
-                size,
-                originPlanet.name,
-                destinationPlanet.name,
-                0,
-                originPlanet.turnDistance(destinationPlanet),
-                originPlanet.player);
+        teamScore = -attackFleet.size;
 
         //Add attacker (it will be removed at the end)
         fleets.add(attackFleet);
