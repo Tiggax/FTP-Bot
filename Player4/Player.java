@@ -120,7 +120,7 @@ public class Player {
 								if (withoutAttack.score < attack.score) {
 
 									if (!attack.canBeAttackByOthers) {
-										attack(attack.fleet);
+										attack(attack.fleet, originPlanet);
 										break;
 									}
 
@@ -130,7 +130,8 @@ public class Player {
 								if (j == 0) {
 
 									attack = attackOrder.get(attackOrder.size() - 1);
-									attack(attack.fleet);
+									attack(attack.fleet, originPlanet);
+									break;
 
 								}
 
@@ -189,8 +190,10 @@ public class Player {
 
 	}
 
-	static void attack(Fleet attack){
-		System.out.println("A " + attack.originPlanet + " " + attack.destinationPlanet + " " + attack.size);
+	static void attack(Fleet fleet, Planet originPlanet){
+		originPlanet.fleetSize -= fleet.size;
+		Fleet.fleets.add(fleet);
+		System.out.println("A " + fleet.originPlanet + " " + fleet.destinationPlanet + " " + fleet.size);
 	}
 
 	public static void getGameState() throws IOException {

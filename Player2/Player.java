@@ -27,6 +27,8 @@ class AttackOrder{
 }
 public class Player {
 
+
+	public static int synchronize = 0;
 	public static int turn = 0;
 
 	public static int universeWidth;
@@ -256,6 +258,18 @@ public class Player {
 	static void setTeammateAndEnemies(String teammateColor){
 
 		PlayerData.setColor(Players.TEAMMATE, teammateColor);
+
+		//Set synchronization
+		for (String color : PlayerData.possibleColors) {
+			if (Objects.equals(color, PlayerData.getPlayerColor(Players.PLAYER))){
+				synchronize = 0;
+				break;
+			}
+			if (Objects.equals(color, PlayerData.getPlayerColor(Players.TEAMMATE))){
+				synchronize = 1;
+				break;
+			}
+		}
 
 		//Find enemies
 		for (String color : PlayerData.possibleColors) {
