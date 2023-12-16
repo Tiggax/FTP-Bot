@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added player synchronization support.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Added attack wanting if this will generate better score.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player3/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player3/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player4/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player4/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -212,7 +214,13 @@
       <option name="presentableId" value="LOCAL−00014" />
       <updated>1702718485560</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL−00015" summary="Added attack wanting if this will generate better score.">
+      <created>1702722351608</created>
+      <option name="number" value="LOCAL−00015" />
+      <option name="presentableId" value="LOCAL−00015" />
+      <updated>1702722351608</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,6 +249,7 @@
     <MESSAGE value="Added teammate help." />
     <MESSAGE value="Fixed multiple attacks bug on same planet by same team." />
     <MESSAGE value="Added player synchronization support." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added player synchronization support." />
+    <MESSAGE value="Added attack wanting if this will generate better score." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added attack wanting if this will generate better score." />
   </component>
 </project>
