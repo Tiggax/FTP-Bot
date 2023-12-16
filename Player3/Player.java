@@ -46,85 +46,84 @@ public class Player {
 
 
 				long startTime = System.currentTimeMillis();
-				try {
-					//We start after second turn because we don't know who is who before that
-					if (turn > 1) {
 
-						for (int i = 0; i < Planet.planets.size(); i++) {
+				//We start after second turn because we don't know who is who before that
+				if (turn > 1) {
 
-							Planet originPlanet = Planet.planets.get(i);
-							if (originPlanet.player != Players.PLAYER) continue;
+					for (int i = 0; i < Planet.planets.size(); i++) {
 
-							ArrayList<AttackOrder> attackOrder = new ArrayList<>();
+						Planet originPlanet = Planet.planets.get(i);
+						if (originPlanet.player != Players.PLAYER) continue;
 
-
-
-							for (int j = 0; j < Planet.planets.size(); j++) {
-
-								Planet destinationPlanet = Planet.planets.get(j);
-
-								//Remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-								if (destinationPlanet.player == Players.PLAYER) continue;
-								if (destinationPlanet.player == Players.TEAMMATE) continue;
-
-
-								GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
-								ge.runEmulation(originPlanet, destinationPlanet, (originPlanet.fleetSize / 3) * 2);
-
-
-								boolean canBeAttackByOthers = false;
-
-								for (Planet planet : Planet.planets) {
-
-									if (PlayerData.isInMyTeam(planet.player)) continue;
-									if (planet.player == destinationPlanet.player) continue;
-
-									if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) {
-										canBeAttackByOthers = true;
-										break;
-									}
-								}
-
-								attackOrder.add(0, new AttackOrder(destinationPlanet, ge.getScore(), canBeAttackByOthers));
-
-							}
-
-							if (attackOrder.isEmpty())continue;
+						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
 
 
 
-							//Run emulation without fleets
+						for (int j = 0; j < Planet.planets.size(); j++) {
+
+							Planet destinationPlanet = Planet.planets.get(j);
+
+							//Remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							if (destinationPlanet.player == Players.PLAYER) continue;
+							if (destinationPlanet.player == Players.TEAMMATE) continue;
+
 
 							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
-							ge.runEmulation();
-							AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), false);
-
-							//Go true data and decide what to attack
-							attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
+							ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize - 1);
 
 
-							if (withoutAttack.score < attackOrder.get(attackOrder.size() - 1).score) {
+							boolean canBeAttackByOthers = false;
 
-								for (int j = attackOrder.size() - 1; j >= 0; j--) {
+							for (Planet planet : Planet.planets) {
 
-									AttackOrder attack = attackOrder.get(j);
+								if (PlayerData.isInMyTeam(planet.player)) continue;
+								if (planet.player == destinationPlanet.player) continue;
+
+								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) {
+									canBeAttackByOthers = true;
+									break;
+								}
+							}
+
+							attackOrder.add(0, new AttackOrder(destinationPlanet, ge.getScore(), canBeAttackByOthers));
+
+						}
+
+						if (attackOrder.isEmpty())continue;
 
 
-									if (withoutAttack.score < attack.score) {
 
-										if (!attack.canBeAttackByOthers) {
-											attack(originPlanet.name, attack.planet.name, (originPlanet.fleetSize / 3) * 2);
-											break;
-										}
+						//Run emulation without fleets
 
+						GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
+						ge.runEmulation();
+						AttackOrder withoutAttack = new AttackOrder(null, ge.getScore(), false);
+
+						//Go true data and decide what to attack
+						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
+
+
+						if (withoutAttack.score < attackOrder.get(attackOrder.size() - 1).score) {
+
+							for (int j = attackOrder.size() - 1; j >= 0; j--) {
+
+								AttackOrder attack = attackOrder.get(j);
+
+
+								if (withoutAttack.score < attack.score) {
+
+									if (!attack.canBeAttackByOthers) {
+										attack(originPlanet.name, attack.planet.name, originPlanet.fleetSize - 1);
+										break;
 									}
 
+								}
 
-									if (j == 0) {
-										attack = attackOrder.get(attackOrder.size() - 1);
-										attack(originPlanet.name, attack.planet.name, (originPlanet.fleetSize / 3) * 2);
 
-									}
+								if (j == 0) {
+
+									attack = attackOrder.get(attackOrder.size() - 1);
+									attack(originPlanet.name, attack.planet.name, originPlanet.fleetSize - 1);
 
 								}
 
@@ -134,9 +133,6 @@ public class Player {
 
 					}
 
-				}catch (Exception e){
-					Log.print("Inside planet attack loop: " + e);
-					return;
 				}
 
 

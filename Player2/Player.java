@@ -63,10 +63,6 @@ public class Player {
 
 							Planet destinationPlanet = Planet.planets.get(j);
 
-							//Remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-							if (destinationPlanet.player == Players.PLAYER) continue;
-							if (destinationPlanet.player == Players.TEAMMATE) continue;
-
 
 							GameEmulation ge = new GameEmulation(Planet.planets, Fleet.fleets, 1000);
 							ge.runEmulation(originPlanet, destinationPlanet, originPlanet.fleetSize - 1);

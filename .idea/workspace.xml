@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Refactoring whole code.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Fixed an index out-of-bounds bug and adjusted the maximum attack army.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
@@ -190,7 +190,13 @@
       <option name="presentableId" value="LOCAL−00010" />
       <updated>1702674556056</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL−00011" summary="Fixed an index out-of-bounds bug and adjusted the maximum attack army.">
+      <created>1702683443126</created>
+      <option name="number" value="LOCAL−00011" />
+      <option name="presentableId" value="LOCAL−00011" />
+      <updated>1702683443126</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,6 +221,7 @@
     <MESSAGE value="Added function for getting distance between two planets." />
     <MESSAGE value="Attack now checks if enemy can attack planet before him." />
     <MESSAGE value="Refactoring whole code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring whole code." />
+    <MESSAGE value="Fixed an index out-of-bounds bug and adjusted the maximum attack army." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed an index out-of-bounds bug and adjusted the maximum attack army." />
   </component>
 </project>
