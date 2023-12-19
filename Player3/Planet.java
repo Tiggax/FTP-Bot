@@ -19,9 +19,6 @@ public class Planet implements Cloneable {
 
     public Players player;
 
-    private static final int[] playersPlanetFleetCount = new int[Players.values().length];
-    private static final float[] playersPlanetFleetSize = new float[Players.values().length];
-
     public Planet(int name, int positionX, int positionY, float size, int fleetSize, Players player) {
         this.name = name;
         this.positionX = positionX;
@@ -32,14 +29,6 @@ public class Planet implements Cloneable {
     }
 
 
-    public static int getPlayerPlanetCount(Players player){
-        return playersPlanetFleetCount[player.ordinal()];
-    }
-
-    public static float getPlayerPlanetSize(Players player){
-        return playersPlanetFleetSize[player.ordinal()];
-    }
-
 
     public static void addNewPlanet(String[] tokens){
         Planet planet = new Planet(
@@ -49,9 +38,6 @@ public class Planet implements Cloneable {
                 Float.parseFloat(tokens[4]),
                 Integer.parseInt(tokens[5]),
                 PlayerData.getPlayerByColor(tokens[6]));
-
-        ++playersPlanetFleetCount[planet.player.ordinal()];
-        playersPlanetFleetSize[planet.player.ordinal()] += planet.size;
 
         Planet.planets.add(planet);
     }
