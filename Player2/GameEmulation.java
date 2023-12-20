@@ -9,114 +9,141 @@ public class GameEmulation {
 
     private final Planet originPlanet;
     private final Planet destinationPlanet;
-    private final Fleet attackFleet;
-
-    private final int turns;
 
 
-    private int teamScore = 0;
-    private int enemiesScore = 0;
+    private Fleet attackFleet;
 
 
-    public GameEmulation(ArrayList<Fleet> allFleets, Planet originPlanet, Planet destinationPlanet, Fleet attackFleet, int turns) {
+    public GameEmulation(ArrayList<Fleet> allFleets, Planet originPlanet, Planet destinationPlanet) {
         this.allFleets = allFleets;
         this.originPlanet = originPlanet;
         this.destinationPlanet = destinationPlanet;
-        this.attackFleet = attackFleet;
-        this.turns = turns;
     }
 
 
-    public int runEmulation() throws IOException {
-
-        if(attackFleet != null){
-            allFleets.add(attackFleet);
-            //teamScore = -attackFleet.size;
-        }
-
+    public float runEmulation(int turns, boolean attack) throws CloneNotSupportedException {
         //Sort fleets so that we can emulate them in correct order
         allFleets.sort(Comparator.comparingDouble(Fleet::getNeededTurns));
+        return emulate(turns, attack);
+    }
 
-        emulateOriginalPlanet(originPlanet);
-        if (PlayerData.isInMyTeam(originPlanet.player))teamScore += originPlanet.fleetSize;
-        else enemiesScore += originPlanet.fleetSize;
-
-        emulateAttackedPlanet(destinationPlanet);
-        if (PlayerData.isInMyTeam(destinationPlanet.player))teamScore += destinationPlanet.fleetSize;
-        else enemiesScore += destinationPlanet.fleetSize;
-
-
-        if(attackFleet != null)allFleets.remove(attackFleet);
-
-        return teamScore - enemiesScore;
+    Fleet getAttackFleet(){
+        return attackFleet;
     }
 
 
+    public float emulate(int turns, boolean attack) throws CloneNotSupportedException {
 
+        int pointerToFleet = 0;
 
-    private void emulateOriginalPlanet(Planet planet) throws IOException {
+        for (int i = 0; i < turns; i++) {
 
-        int previousTurn = Integer.MIN_VALUE;
+            if(attack && originPlanet.player == Players.PLAYER) {
 
-        for (Fleet fleet : allFleets) {
+                Planet copyOfDestinationPlanet = (Planet) destinationPlanet.clone();
+                Planet copyOfOriginPlanet = (Planet) originPlanet.clone();
 
-            if (fleet.getNeededTurns() > turns) break;
+                attackFleet = new Fleet(
+                        Integer.MAX_VALUE,
+                        (int)(copyOfOriginPlanet.fleetSize * 1.0) - 1,
+                        copyOfOriginPlanet.name,
+                        copyOfDestinationPlanet.name,
+                        -i,
+                        copyOfOriginPlanet.turnDistance(copyOfDestinationPlanet),
+                        copyOfOriginPlanet.player);
 
-            int currentTurn = fleet.getNeededTurns();
+                copyOfOriginPlanet.fleetSize -= attackFleet.size;
+                allFleets.add(attackFleet);
 
+                //Sort fleets so that we can emulate them in correct order
+                allFleets.sort(Comparator.comparingDouble(Fleet::getNeededTurns));
 
+                int secondPointerToFleet = pointerToFleet;
 
+                for (int j = i; j < turns; j++) {
 
-            if (attackFleet != null && previousTurn != currentTurn){
+                    copyOfDestinationPlanet.fleetSize = getPlanetsFleets(copyOfDestinationPlanet, 1);
+                    copyOfOriginPlanet.fleetSize = getPlanetsFleets(copyOfOriginPlanet, 1);
 
-                if ((-attackFleet.currentTurn) <= currentTurn && (-attackFleet.currentTurn) > previousTurn){
+                    if (allFleets.size() > secondPointerToFleet){
 
-                    int newPlanetFleetSize = getPlanetsFleets(planet, (-attackFleet.currentTurn) - previousTurn);
+                        Fleet secondFleet = allFleets.get(secondPointerToFleet);
 
-                    if (newPlanetFleetSize <= attackFleet.size || planet.player != attackFleet.player){
-                        attackFleet.size = 0;
+                        while (secondFleet.getNeededTurns() == j) {
+
+                            if (secondFleet.destinationPlanet == copyOfDestinationPlanet.name){
+                                landFleetsToPlanet(secondFleet, copyOfDestinationPlanet);
+                            }
+                            if (secondFleet.destinationPlanet == copyOfOriginPlanet.name){
+                                landFleetsToPlanet(secondFleet, copyOfOriginPlanet);
+                            }
+                            secondPointerToFleet++;
+
+                            if (allFleets.size() <= secondPointerToFleet)break;
+                            secondFleet = allFleets.get(secondPointerToFleet);
+                        }
                     }
-                    else {
 
-                        planet.fleetSize = newPlanetFleetSize;
-                        planet.fleetSize -= attackFleet.size;
-                        previousTurn = (-attackFleet.currentTurn);
+                }
 
-                    }
 
+                allFleets.remove(attackFleet);
+
+                if (PlayerData.isInMyTeam(copyOfOriginPlanet.player) && PlayerData.isInMyTeam(copyOfDestinationPlanet.player)){
+                    return (copyOfOriginPlanet.size + copyOfDestinationPlanet.size);
                 }
 
             }
 
 
 
-            if (fleet.destinationPlanet == planet.name) {
+            destinationPlanet.fleetSize = getPlanetsFleets(destinationPlanet, 1);
+            originPlanet.fleetSize = getPlanetsFleets(originPlanet, 1);
 
-                planet.fleetSize = getPlanetsFleets(planet, currentTurn - previousTurn);
-                landFleetsToPlanet(fleet, planet);
-                previousTurn = currentTurn;
+            if (allFleets.size() > pointerToFleet) {
+                Fleet fleet = allFleets.get(pointerToFleet);
 
+                while (fleet.getNeededTurns() == i) {
+
+                    if (fleet.destinationPlanet == destinationPlanet.name){
+                        landFleetsToPlanet(fleet, destinationPlanet);
+                    }
+                    if (fleet.destinationPlanet == originPlanet.name){
+                        landFleetsToPlanet(fleet, originPlanet);
+                    }
+                    pointerToFleet++;
+                    if (allFleets.size() <= pointerToFleet)break;
+                    fleet = allFleets.get(pointerToFleet);
+                }
             }
+
 
         }
 
-        planet.fleetSize = getPlanetsFleets(planet, turns - previousTurn);
+        float ret = 0;
+
+        if (PlayerData.isInMyTeam(originPlanet.player)){
+            ret += originPlanet.size;
+        }
+
+        if (PlayerData.isInMyTeam(destinationPlanet.player)){
+            ret += destinationPlanet.size;
+        }
+
+        return ret;
 
     }
 
 
-
-
-    private void emulateAttackedPlanet(Planet planet){
-
-        int previousTurn = Integer.MIN_VALUE;
-
+    private void emulateAttackedPlanet(Planet planet, int turns){
+        int previousTurn = 0;
         for (Fleet fleet : allFleets) {
 
             if (fleet.getNeededTurns() > turns) break;
             if (fleet.destinationPlanet != planet.name) continue;
 
             int currentTurn = fleet.getNeededTurns();
+            if (currentTurn <= previousTurn)continue;
 
             planet.fleetSize = getPlanetsFleets(planet, currentTurn - previousTurn);
             landFleetsToPlanet(fleet, planet);

@@ -8,14 +8,14 @@ import java.util.Objects;
 class AttackOrder{
 
 	public Planet planet;
-	public int score;
+	public float score;
 	public int canBeAttackByOthers;
 
 	public Fleet fleet;
 
 
 
-	public AttackOrder(Planet planet, int score, int canBeAttackByOthers, Fleet fleet) {
+	public AttackOrder(Planet planet, float score, int canBeAttackByOthers, Fleet fleet) {
 		this.planet = planet;
 		this.score = score;
 		this.canBeAttackByOthers = canBeAttackByOthers;
@@ -45,15 +45,11 @@ public class Player {
 
 
 	private static final float maxAttackRatio = 1.0f;
-	private static final int emulateTurns = 50;
-	private static final int emulateAttackTime = 100;
-
-
+	private static final int emulateTurns = 100;
 
 	public static void main(String[] args) throws Exception {
 
 		try {
-
 
 			while (true) {
 
@@ -82,7 +78,7 @@ public class Player {
 							if (originPlanet == destinationPlanet)continue;
 
 							//synchronize with teammate
-							if (((synchronize & turn) != (synchronize & destinationPlanet.name)) && Planet.getPlayerPlanetCount(Players.TEAMMATE) != 0 )continue;
+							//if (((synchronize & turn) != (synchronize & destinationPlanet.name)) && Planet.getPlayerPlanetCount(Players.TEAMMATE) != 0 )continue;
 
 							//Check if attacking planet can be reinforced
 							int canBeAttackByOthers = 0;
@@ -96,34 +92,14 @@ public class Player {
 
 							}
 
-							GameEmulation ge_0 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), null, emulateTurns);
-							int ste = ge_0.runEmulation();
+							GameEmulation ge_0 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone());
+							GameEmulation ge_1 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone());
 
-							AttackOrder localBestScore = null;
+							float score = ge_1.runEmulation(emulateTurns,true) - ge_0.runEmulation(emulateTurns,false);
 
-							for (int k = 0; k < emulateAttackTime; k++) {
+							Log.print("Score: " + score);
 
-								Fleet attackFleet = new Fleet(
-										Integer.MAX_VALUE,
-										(int)(originPlanet.getFleetSize(k) * maxAttackRatio) - 1,
-										originPlanet.name,
-										destinationPlanet.name,
-										-k,
-										originPlanet.turnDistance(destinationPlanet),
-										originPlanet.player);
-
-								GameEmulation ge_1 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), attackFleet, emulateTurns);
-
-								int score = ge_1.runEmulation() - ste;
-								if(score > 0){
-									localBestScore = new AttackOrder(originPlanet, score, canBeAttackByOthers, attackFleet);
-									break;
-								}
-
-							}
-
-
-							if(localBestScore != null)attackOrder.add(localBestScore);
+							if(score > 0)attackOrder.add(new AttackOrder(originPlanet, score, canBeAttackByOthers, ge_1.getAttackFleet()));
 
 						}
 
