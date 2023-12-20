@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -14,8 +13,6 @@ public class GameEmulation {
     private final int turns;
 
 
-    private int teamScore = 0;
-    private int enemiesScore = 0;
 
 
     public GameEmulation(ArrayList<Fleet> allFleets, Planet originPlanet, Planet destinationPlanet, Fleet attackFleet, int turns) {
@@ -27,34 +24,33 @@ public class GameEmulation {
     }
 
 
-    public int runEmulation() throws IOException {
+    public int runEmulation() {
 
-        if(attackFleet != null){
-            allFleets.add(attackFleet);
-            //teamScore = -attackFleet.size;
-        }
+        int score = 0;
+
+        if(attackFleet != null) allFleets.add(attackFleet);
 
         //Sort fleets so that we can emulate them in correct order
         allFleets.sort(Comparator.comparingDouble(Fleet::getNeededTurns));
 
         emulateOriginalPlanet(originPlanet);
-        if (PlayerData.isInMyTeam(originPlanet.player))teamScore += originPlanet.fleetSize;
-        else enemiesScore += originPlanet.fleetSize;
+        if (PlayerData.isInMyTeam(originPlanet.player))score += originPlanet.fleetSize;
+        else score -= originPlanet.fleetSize;
 
         emulateAttackedPlanet(destinationPlanet);
-        if (PlayerData.isInMyTeam(destinationPlanet.player))teamScore += destinationPlanet.fleetSize;
-        else enemiesScore += destinationPlanet.fleetSize;
+        if (PlayerData.isInMyTeam(destinationPlanet.player))score += destinationPlanet.fleetSize;
+        else score -= destinationPlanet.fleetSize;
 
 
         if(attackFleet != null)allFleets.remove(attackFleet);
 
-        return teamScore - enemiesScore;
+        return score;
     }
 
 
 
 
-    private void emulateOriginalPlanet(Planet planet) throws IOException {
+    private void emulateOriginalPlanet(Planet planet) {
 
         int previousTurn = Integer.MIN_VALUE;
 
@@ -63,8 +59,6 @@ public class GameEmulation {
             if (fleet.getNeededTurns() > turns) break;
 
             int currentTurn = fleet.getNeededTurns();
-
-
 
 
             if (attackFleet != null && previousTurn != currentTurn){
@@ -87,8 +81,6 @@ public class GameEmulation {
                 }
 
             }
-
-
 
             if (fleet.destinationPlanet == planet.name) {
 
@@ -137,7 +129,7 @@ public class GameEmulation {
 
     private void landFleetsToPlanet(Fleet fleet, Planet planet){
 
-        if (fleet.size <= 0)return;
+        if (fleet.size <= 0) return;
 
         planet.fleetSize += fleet.size * addOrSub(fleet.player, planet.player);
 

@@ -54,7 +54,6 @@ public class Player {
 
 		try {
 
-
 			while (true) {
 
 				//Get game inputs
@@ -70,9 +69,7 @@ public class Player {
 						Planet originPlanet = Planet.planets.get(i);
 						if (originPlanet.player != Players.PLAYER) continue;
 
-
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
-
 
 						for (int j = 0; j < Planet.planets.size(); j++) {
 
@@ -82,7 +79,7 @@ public class Player {
 							if (originPlanet == destinationPlanet)continue;
 
 							//synchronize with teammate
-							//if ((synchronize & turn) != (synchronize & destinationPlanet.name))continue;
+							if (((synchronize & turn) != (synchronize & destinationPlanet.name)) && Planet.getPlayerPlanetCount(Players.TEAMMATE) != 0 )continue;
 
 							//Check if attacking planet can be reinforced
 							int canBeAttackByOthers = 0;
@@ -97,9 +94,8 @@ public class Player {
 							}
 
 							GameEmulation ge_0 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), null, emulateTurns);
-							int ste = ge_0.runEmulation();
+							int scoreWithoutAttack = ge_0.runEmulation();
 
-							AttackOrder localBestScore = null;
 
 							for (int k = 0; k < emulateAttackTime; k++) {
 
@@ -113,24 +109,20 @@ public class Player {
 										originPlanet.player);
 
 								GameEmulation ge_1 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), attackFleet, emulateTurns);
+								int score = ge_1.runEmulation() - scoreWithoutAttack;
 
-								int score = ge_1.runEmulation() - ste;
 								if(score > 0){
-									localBestScore = new AttackOrder(originPlanet, score, canBeAttackByOthers, attackFleet);
+									attackOrder.add(new AttackOrder(originPlanet, score, canBeAttackByOthers, attackFleet));
 									break;
 								}
 
 							}
-
-
-							if(localBestScore != null)attackOrder.add(localBestScore);
 
 						}
 
 						if (attackOrder.isEmpty())continue;
 
 						//Go true data and decide what to attack
-						//attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));
 
 						for (int j = 0; j < attackOrder.size(); j++) {
@@ -149,25 +141,6 @@ public class Player {
 							}
 
 						}
-
-						/*
-						for (int j = attackOrder.size() - 1; j >= 0; j--) {
-
-							AttackOrder attack = attackOrder.get(j);
-
-							if (attack.canBeAttackByOthers == 0) {
-								attack(attack.fleet, originPlanet);
-								break;
-							}
-
-							if (j == 0) {
-								attack = attackOrder.get(attackOrder.size() - 1);
-								attack(attack.fleet, originPlanet);
-								break;
-							}
-
-						}
-						 */
 
 					}
 
