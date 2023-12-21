@@ -36,7 +36,6 @@ class AttackOrder{
 }
 public class Player {
 
-
 	public static int synchronize = 0;
 	public static int turn = 0;
 
