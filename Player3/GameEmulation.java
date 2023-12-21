@@ -1,10 +1,6 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-
-
 public class GameEmulation {
 
-    private final ArrayList<Fleet> allFleets;
+    private static final int startTurn = Integer.MIN_VALUE;
 
     private final Planet originPlanet;
     private final Planet destinationPlanet;
@@ -14,9 +10,7 @@ public class GameEmulation {
 
 
 
-
-    public GameEmulation(ArrayList<Fleet> allFleets, Planet originPlanet, Planet destinationPlanet, Fleet attackFleet, int turns) {
-        this.allFleets = allFleets;
+    public GameEmulation(Planet originPlanet, Planet destinationPlanet, Fleet attackFleet, int turns) {
         this.originPlanet = originPlanet;
         this.destinationPlanet = destinationPlanet;
         this.attackFleet = attackFleet;
@@ -28,10 +22,7 @@ public class GameEmulation {
 
         int score = 0;
 
-        if(attackFleet != null) allFleets.add(attackFleet);
-
-        //Sort fleets so that we can emulate them in correct order
-        allFleets.sort(Comparator.comparingDouble(Fleet::getNeededTurns));
+        if(attackFleet != null) destinationPlanet.addAttackingFleets(attackFleet);
 
         emulateOriginalPlanet(originPlanet);
         if (PlayerData.isInMyTeam(originPlanet.player))score += originPlanet.fleetSize;
@@ -41,8 +32,7 @@ public class GameEmulation {
         if (PlayerData.isInMyTeam(destinationPlanet.player))score += destinationPlanet.fleetSize;
         else score -= destinationPlanet.fleetSize;
 
-
-        if(attackFleet != null)allFleets.remove(attackFleet);
+        if(attackFleet != null) destinationPlanet.removeAttackingFleet(attackFleet);
 
         return score;
     }
@@ -52,48 +42,51 @@ public class GameEmulation {
 
     private void emulateOriginalPlanet(Planet planet) {
 
-        int previousTurn = Integer.MIN_VALUE;
+        int previousTurn = startTurn;
 
-        for (Fleet fleet : allFleets) {
+        for (int i = 0; i < planet.getAttackingFleetsSize(); i++) {
+
+            Fleet fleet = planet.getAttackingFleets(i);
 
             if (fleet.getNeededTurns() > turns) break;
-
             int currentTurn = fleet.getNeededTurns();
 
+            previousTurn = tryAttackingDestination(planet, previousTurn, currentTurn);
 
-            if (attackFleet != null && previousTurn != currentTurn){
-
-                if ((-attackFleet.currentTurn) <= currentTurn && (-attackFleet.currentTurn) > previousTurn){
-
-                    int newPlanetFleetSize = getPlanetsFleets(planet, (-attackFleet.currentTurn) - previousTurn);
-
-                    if (newPlanetFleetSize <= attackFleet.size || planet.player != attackFleet.player){
-                        attackFleet.size = 0;
-                    }
-                    else {
-
-                        planet.fleetSize = newPlanetFleetSize;
-                        planet.fleetSize -= attackFleet.size;
-                        previousTurn = (-attackFleet.currentTurn);
-
-                    }
-
-                }
-
-            }
-
-            if (fleet.destinationPlanet == planet.name) {
-
-                planet.fleetSize = getPlanetsFleets(planet, currentTurn - previousTurn);
-                landFleetsToPlanet(fleet, planet);
-                previousTurn = currentTurn;
-
-            }
+            planet.fleetSize = getPlanetsFleets(planet, currentTurn - previousTurn);
+            landFleetsToPlanet(fleet, planet);
+            previousTurn = currentTurn;
 
         }
 
+        previousTurn = tryAttackingDestination(planet, previousTurn, turns);
+
         planet.fleetSize = getPlanetsFleets(planet, turns - previousTurn);
 
+    }
+
+
+    private int tryAttackingDestination(Planet planet, int previousTurn, int currentTurn){
+
+        if (attackFleet != null && previousTurn != currentTurn){
+
+            if ((-attackFleet.currentTurn) <= currentTurn && (-attackFleet.currentTurn) > previousTurn){
+
+                int newPlanetFleetSize = getPlanetsFleets(planet, (-attackFleet.currentTurn) - previousTurn);
+
+                if (newPlanetFleetSize <= attackFleet.size || planet.player != attackFleet.player){
+                    attackFleet.size = 0;
+                }
+                else {
+
+                    planet.fleetSize = newPlanetFleetSize;
+                    planet.fleetSize -= attackFleet.size;
+                    previousTurn = (-attackFleet.currentTurn);
+
+                }
+            }
+        }
+        return previousTurn;
     }
 
 
@@ -101,12 +94,13 @@ public class GameEmulation {
 
     private void emulateAttackedPlanet(Planet planet){
 
-        int previousTurn = Integer.MIN_VALUE;
+        int previousTurn = startTurn;
 
-        for (Fleet fleet : allFleets) {
+        for (int i = 0; i < planet.getAttackingFleetsSize(); i++) {
+
+            Fleet fleet = planet.getAttackingFleets(i);
 
             if (fleet.getNeededTurns() > turns) break;
-            if (fleet.destinationPlanet != planet.name) continue;
 
             int currentTurn = fleet.getNeededTurns();
 
@@ -129,7 +123,7 @@ public class GameEmulation {
 
     private void landFleetsToPlanet(Fleet fleet, Planet planet){
 
-        if (fleet.size <= 0) return;
+        if (fleet.size <= 0)return;
 
         planet.fleetSize += fleet.size * addOrSub(fleet.player, planet.player);
 

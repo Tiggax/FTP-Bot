@@ -93,7 +93,7 @@ public class Player {
 
 							}
 
-							GameEmulation ge_0 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), null, emulateTurns);
+							GameEmulation ge_0 = new GameEmulation((Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), null, emulateTurns);
 							int scoreWithoutAttack = ge_0.runEmulation();
 
 
@@ -108,7 +108,7 @@ public class Player {
 										originPlanet.turnDistance(destinationPlanet),
 										originPlanet.player);
 
-								GameEmulation ge_1 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), attackFleet, emulateTurns);
+								GameEmulation ge_1 = new GameEmulation((Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), attackFleet, emulateTurns);
 								int score = ge_1.runEmulation() - scoreWithoutAttack;
 
 								if(score > 0){
@@ -193,14 +193,14 @@ public class Player {
 
 	}
 
-	static void attack(Fleet fleet, Planet originPlanet){
+	static void attack(Fleet fleet, Planet originPlanet) throws IOException {
 
 		//Check if attack can be done
 		if (0 > fleet.currentTurn)return;
 		if (originPlanet.fleetSize * maxAttackRatio < fleet.size)return;
 
 		originPlanet.fleetSize -= fleet.size;
-		Fleet.fleets.add(fleet);
+		Planet.addFleet(fleet);
 		System.out.println("A " + fleet.originPlanet + " " + fleet.destinationPlanet + " " + fleet.size);
 	}
 
@@ -208,7 +208,6 @@ public class Player {
 
 		//Reset data from previous turn
 		Planet.planets = new ArrayList<>();
-		Fleet.fleets = new ArrayList<>();
 
 		BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
 
@@ -238,7 +237,7 @@ public class Player {
 
 				//Setup fleet
 				case 'F':
-					Fleet.addNewFleet(tokens);
+					Planet.addNewFleet(tokens);
 					break;
 
 				//Someone died (string is not in color????????? this data is totally useless)
