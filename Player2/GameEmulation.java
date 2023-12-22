@@ -24,21 +24,12 @@ public class GameEmulation {
 
         if(attackFleet != null) destinationPlanet.addAttackingFleets(attackFleet);
 
-        //emulatePlanet(originPlanet);
-        //if (PlayerData.isInMyTeam(originPlanet.player))score += originPlanet.fleetSize;
-        //else score -= originPlanet.fleetSize;
-
-        //emulatePlanet(destinationPlanet);
-        //if (PlayerData.isInMyTeam(destinationPlanet.player))score += destinationPlanet.fleetSize;
-        //else score -= destinationPlanet.fleetSize;
-
-
         for (int i = 0; i < Planet.planets.size(); i++) {
 
             Planet planet = (Planet) Planet.planets.get(i).clone();
 
             emulatePlanet(planet);
-            if (PlayerData.isInMyTeam(planet.player))score += planet.fleetSize;
+            if (PlayerData.isInMyTeam(planet.player)) score += planet.fleetSize;
             else score -= planet.fleetSize;
 
         }
@@ -103,14 +94,14 @@ public class GameEmulation {
 
 
     private int getPlanetsFleets(Planet planet, int turns){
-        if (planet.player == Players.NEUTRAL)return planet.fleetSize;
+        if (planet.player == Players.NEUTRAL) return planet.fleetSize;
         return planet.getFleetSize(turns);
     }
 
 
     private void landFleetsToPlanet(Fleet fleet, Planet planet){
 
-        if (fleet.size <= 0)return;
+        if (fleet.size <= 0) return;
 
         planet.fleetSize += fleet.size * addOrSub(fleet.player, planet.player);
 
@@ -121,17 +112,21 @@ public class GameEmulation {
 
     }
 
-    private int addOrSub(Players first, Players second){
+    private int addOrSub(Players first, Players second) {
 
-        if(first == second)return 1;
+        switch (first) {
+            case FIRST_ENEMY:
+                return (second == Players.SECOND_ENEMY) ? 1 : -1;
+            case SECOND_ENEMY:
+                return (second == Players.FIRST_ENEMY) ? 1 : -1;
+            case PLAYER:
+                return (second == Players.TEAMMATE) ? 1 : -1;
+            case TEAMMATE:
+                return (second == Players.PLAYER) ? 1 : -1;
+            default:
+                if (first == second) return 1;
+                return -1;
+        }
 
-        if (first == Players.FIRST_ENEMY && second == Players.SECOND_ENEMY)return 1;
-        if (first == Players.SECOND_ENEMY && second == Players.FIRST_ENEMY)return 1;
-
-        if (first == Players.PLAYER && second == Players.TEAMMATE)return 1;
-        if (first == Players.TEAMMATE && second == Players.PLAYER)return 1;
-
-        return -1;
     }
-
 }
