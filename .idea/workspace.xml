@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Fixed a bug where fleets were sent even if another planet had sent them earlier.">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Simple code optimization.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/GameEmulation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/GameEmulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/GameEmulation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -273,7 +271,13 @@
       <option name="presentableId" value="LOCAL−00021" />
       <updated>1703183668689</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL−00022" summary="Simple code optimization.">
+      <created>1703279301823</created>
+      <option name="number" value="LOCAL−00022" />
+      <option name="presentableId" value="LOCAL−00022" />
+      <updated>1703279301823</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -310,6 +314,7 @@
     <MESSAGE value="Fixed some bugs." />
     <MESSAGE value="Changed how fleets are stored and optimized code that nobody understands." />
     <MESSAGE value="Fixed a bug where fleets were sent even if another planet had sent them earlier." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed a bug where fleets were sent even if another planet had sent them earlier." />
+    <MESSAGE value="Simple code optimization." />
+    <option name="LAST_COMMIT_MESSAGE" value="Simple code optimization." />
   </component>
 </project>

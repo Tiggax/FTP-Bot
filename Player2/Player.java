@@ -110,7 +110,7 @@ public class Player {
 								GameEmulation ge_1 = new GameEmulation(originPlanet, destinationPlanet, attackFleet, emulateTurns);
 								int score = ge_1.runEmulation() - scoreWithoutAttack;
 
-								if(score > 0){
+								if(score > 0) {
 									attackOrder.add(new AttackOrder(originPlanet, score, canBeAttackByOthers, attackFleet));
 									break;
 								}
@@ -119,7 +119,7 @@ public class Player {
 
 						}
 
-						if (attackOrder.isEmpty())continue;
+						if (attackOrder.isEmpty()) continue;
 
 						//Go true data and decide what to attack
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));

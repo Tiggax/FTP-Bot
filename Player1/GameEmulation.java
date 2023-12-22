@@ -114,6 +114,8 @@ public class GameEmulation {
 
     private int addOrSub(Players first, Players second) {
 
+        if (first == second) return 1;
+
         switch (first) {
             case FIRST_ENEMY:
                 return (second == Players.SECOND_ENEMY) ? 1 : -1;
@@ -124,7 +126,6 @@ public class GameEmulation {
             case TEAMMATE:
                 return (second == Players.PLAYER) ? 1 : -1;
             default:
-                if (first == second) return 1;
                 return -1;
         }
 
