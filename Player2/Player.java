@@ -184,8 +184,12 @@ public class Player {
 	static void attack(Fleet fleet, Planet originPlanet) throws IOException {
 
 		//Check if attack can be done
-		if (0 > fleet.currentTurn) return;
-		if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
+
+		if (turn > 40) {
+			if (0 > fleet.currentTurn) return;
+			if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
+		}
+
 
 		originPlanet.fleetSize -= fleet.size;
 		Planet.addFleet(fleet);
