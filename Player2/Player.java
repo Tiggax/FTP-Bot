@@ -46,8 +46,6 @@ public class Player {
 	private static final int emulateTurns = 50;
 	private static final int emulateAttackTime = 100;
 
-	private static final int defaultAttackFirstTurns = 40;
-
 
 	public static void main(String[] args) throws Exception {
 
@@ -186,11 +184,10 @@ public class Player {
 
 
 		//Check if attack can be done
-		if (turn > defaultAttackFirstTurns) {
-			if (0 > fleet.currentTurn) return;
-			if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
+		if (0 > fleet.currentTurn) return;
+		if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
 
-		}
+
 
 		originPlanet.fleetSize -= fleet.size;
 		Planet.addFleet(fleet);

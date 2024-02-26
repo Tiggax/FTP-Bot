@@ -189,7 +189,6 @@ public class Player {
 		if (turn > defaultAttackFirstTurns) {
 			if (0 > fleet.currentTurn) return;
 			if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
-
 		}
 
 		originPlanet.fleetSize -= fleet.size;
