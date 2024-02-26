@@ -1,6 +1,6 @@
 public class GameEmulation {
 
-    private static final int startTurn = -1;
+    private static final int startTurn = Integer.MIN_VALUE;
 
     private final Planet originPlanet;
     private final Planet destinationPlanet;
