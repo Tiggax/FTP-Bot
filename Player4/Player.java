@@ -43,9 +43,10 @@ public class Player {
 
 
 	private static final float maxAttackRatio = 1.0f;
-	private static final int emulateTurns = 70;
+	private static final int emulateTurns = 50;
 	private static final int emulateAttackTime = 100;
 
+	private static final int defaultAttackFirstTurns = 40;
 
 
 	public static void main(String[] args) throws Exception {
@@ -66,8 +67,8 @@ public class Player {
 
 						Planet originPlanet = Planet.planets.get(i);
 
-						if (originPlanet.player != Players.PLAYER) continue;
-						//if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
+						if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
+
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
 
@@ -87,9 +88,10 @@ public class Player {
 								if (PlayerData.isInMyTeam(planet.player)) continue;
 								if (planet.player == destinationPlanet.player) continue;
 
-								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet))++canBeAttackByOthers;
+								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) ++canBeAttackByOthers;
 
 							}
+
 
 							GameEmulation ge_0 = new GameEmulation(originPlanet, destinationPlanet, null, emulateTurns);
 							int scoreWithoutAttack = ge_0.runEmulation();
@@ -122,6 +124,7 @@ public class Player {
 
 						//Go true data and decide what to attack
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));
+
 
 						for (int j = 0; j < attackOrder.size(); j++) {
 
@@ -170,18 +173,6 @@ public class Player {
 			Log.print("ERROR: ");
 			Log.print(e.getMessage());
 
-
-			for (int i = 0; i < e.getStackTrace().length; i++) {
-				//Log.print(e.getStackTrace()[0].getLineNumber() + "");
-				//Log.print(e.getStackTrace()[0].getClassName() + "");
-				//Log.print(e.getStackTrace()[0].getClassLoaderName() + "");
-				//Log.print(e.getStackTrace()[0].getFileName() + "");
-				//Log.print(e.getStackTrace()[0].getMethodName() + "");
-				//Log.print(e.getStackTrace()[0].getModuleName() + "");
-				//Log.print(e.getStackTrace()[0].getModuleVersion() + "");
-			}
-
-
 			e.printStackTrace();
 
 		}
@@ -193,9 +184,13 @@ public class Player {
 
 	static void attack(Fleet fleet, Planet originPlanet) throws IOException {
 
+
 		//Check if attack can be done
-		if (0 > fleet.currentTurn) return;
-		if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
+		if (turn > defaultAttackFirstTurns) {
+			if (0 > fleet.currentTurn) return;
+			if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
+
+		}
 
 		originPlanet.fleetSize -= fleet.size;
 		Planet.addFleet(fleet);
