@@ -112,7 +112,7 @@ public class Player {
 								int score = ge_1.runEmulation() - scoreWithoutAttack;
 
 								if(score > 0) {
-									attackOrder.add(new AttackOrder(originPlanet, score, canBeAttackByOthers, attackFleet));
+									attackOrder.add(new AttackOrder(destinationPlanet, score, canBeAttackByOthers, attackFleet));
 									break;
 								}
 
@@ -131,13 +131,13 @@ public class Player {
 							AttackOrder attack = attackOrder.get(j);
 
 							if (attack.canBeAttackByOthers == 0) {
-								attack(attack.fleet, originPlanet);
+								attack(attack, originPlanet);
 								break;
 							}
 
 							if (j == (attackOrder.size() - 1)) {
 								attack = attackOrder.get(0);
-								attack(attack.fleet, originPlanet);
+								attack(attack, originPlanet);
 								break;
 							}
 
@@ -182,19 +182,23 @@ public class Player {
 
 	}
 
-	static void attack(Fleet fleet, Planet originPlanet) throws IOException {
+	static void attack(AttackOrder attack, Planet originPlanet) throws IOException {
 
+
+		int attackSize = attack.fleet.size;
 
 		//Check if attack can be done
 		if (turn > defaultAttackFirstTurns) {
-			if (0 > fleet.currentTurn) return;
-			if (originPlanet.fleetSize * maxAttackRatio < fleet.size) return;
+			if (0 > attack.fleet.currentTurn) return;
+			if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
+		} else {
+			//attackSize = attack.planet.fleetSize;
 		}
 
-		originPlanet.fleetSize -= fleet.size;
-		Planet.addFleet(fleet);
-		if (fleet.player != Players.PLAYER) return;
-		System.out.println("A " + fleet.originPlanet + " " + fleet.destinationPlanet + " " + fleet.size);
+		originPlanet.fleetSize -= attackSize;
+		Planet.addFleet(attack.fleet);
+		if (attack.fleet.player != Players.PLAYER) return;
+		System.out.println("A " + attack.fleet.originPlanet + " " + attack.fleet.destinationPlanet + " " + attackSize);
 	}
 
 	public static void getGameState() throws IOException {
