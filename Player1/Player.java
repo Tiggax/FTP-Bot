@@ -66,7 +66,9 @@ public class Player {
 
 						Planet originPlanet = Planet.planets.get(i);
 
-						if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
+						if (originPlanet.player != Players.PLAYER) continue;
+						//if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
+
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
 

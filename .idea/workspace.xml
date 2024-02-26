@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="For testing (all bots are the same code)">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="For testing (bot is now calculating teammate attack)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player3/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player3/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player4/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player4/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +293,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708961687035</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="For testing (bot is now calculating teammate attack)">
+      <option name="closed" value="true" />
+      <created>1708965578679</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1708965578679</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -330,6 +340,7 @@
     <MESSAGE value="Fixed a bug where fleets were sent even if another planet had sent them earlier." />
     <MESSAGE value="Simple code optimization." />
     <MESSAGE value="For testing (all bots are the same code)" />
-    <option name="LAST_COMMIT_MESSAGE" value="For testing (all bots are the same code)" />
+    <MESSAGE value="For testing (bot is now calculating teammate attack)" />
+    <option name="LAST_COMMIT_MESSAGE" value="For testing (bot is now calculating teammate attack)" />
   </component>
 </project>
