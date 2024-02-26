@@ -66,8 +66,7 @@ public class Player {
 
 						Planet originPlanet = Planet.planets.get(i);
 
-						if (originPlanet.player != Players.PLAYER) continue;
-						//if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
+						if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
 
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
@@ -91,6 +90,7 @@ public class Player {
 								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) ++canBeAttackByOthers;
 
 							}
+
 
 							GameEmulation ge_0 = new GameEmulation(originPlanet, destinationPlanet, null, emulateTurns);
 							int scoreWithoutAttack = ge_0.runEmulation();
@@ -123,6 +123,7 @@ public class Player {
 
 						//Go true data and decide what to attack
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));
+
 
 						for (int j = 0; j < attackOrder.size(); j++) {
 

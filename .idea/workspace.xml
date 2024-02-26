@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="For testing">
+    <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Fixed some bugs.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player3/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player3/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player4/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player4/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,11 +49,13 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="testing" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{}]]></component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -66,29 +68,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.FTP-Bot [compileAllPlayers].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.FTP-Bot-0 [compileAllPlayers].executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.Run game.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/blaz/IdeaProjects/FTP-Bot/Player2&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.FTP-Bot [compileAllPlayers].executor": "Run",
+    "Gradle.FTP-Bot-0 [compileAllPlayers].executor": "Run",
+    "JAR Application.Run game.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "testing",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/blaz/Desktop/FTP-Bot/Player2",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Player2" />
-      <recent name="$PROJECT_DIR$/Player4" />
-      <recent name="$PROJECT_DIR$/Player3" />
       <recent name="C:\Users\Blaz\IdeaProjects\FTP-Bot\Player2" />
     </key>
   </component>
@@ -265,65 +265,7 @@
       <option name="presentableId" value="LOCAL−00019" />
       <updated>1702749153597</updated>
     </task>
-    <task id="LOCAL−00020" summary="Changed how fleets are stored and optimized code that nobody understands.">
-      <created>1703180829850</created>
-      <option name="number" value="LOCAL−00020" />
-      <option name="presentableId" value="LOCAL−00020" />
-      <updated>1703180829850</updated>
-    </task>
-    <task id="LOCAL−00021" summary="Fixed a bug where fleets were sent even if another planet had sent them earlier.">
-      <created>1703183668689</created>
-      <option name="number" value="LOCAL−00021" />
-      <option name="presentableId" value="LOCAL−00021" />
-      <updated>1703183668689</updated>
-    </task>
-    <task id="LOCAL−00022" summary="Simple code optimization.">
-      <created>1703279301823</created>
-      <option name="number" value="LOCAL−00022" />
-      <option name="presentableId" value="LOCAL−00022" />
-      <updated>1703279301823</updated>
-    </task>
-    <task id="LOCAL-00023" summary="For testing (all bots are the same code)">
-      <option name="closed" value="true" />
-      <created>1708961687035</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1708961687035</updated>
-    </task>
-    <task id="LOCAL-00024" summary="For testing (bot is now calculating teammate attack)">
-      <option name="closed" value="true" />
-      <created>1708965578679</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1708965578679</updated>
-    </task>
-    <task id="LOCAL-00025" summary="For testing">
-      <option name="closed" value="true" />
-      <created>1708966131443</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1708966131443</updated>
-    </task>
-    <task id="LOCAL-00026" summary="For testing">
-      <option name="closed" value="true" />
-      <created>1708974487270</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1708974487271</updated>
-    </task>
-    <task id="LOCAL-00027" summary="For testing">
-      <option name="closed" value="true" />
-      <created>1708975153574</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1708975153574</updated>
-    </task>
-    <option name="localTasksCounter" value="28" />
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -338,6 +280,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added IntelliJ configuration and resolved a Gradle compiler bug." />
     <MESSAGE value="Added lists that contain all planets and all fleets, and also improved the fleet planets." />
     <MESSAGE value="Moved certain functions into more appropriate classes and included player identification within fleets and planets." />
     <MESSAGE value="First implementation of predicting moves." />
@@ -357,12 +300,6 @@
     <MESSAGE value="Added some parameters" />
     <MESSAGE value="Added getFleetSize functions in planet to get fleet size for x turns." />
     <MESSAGE value="Fixed some bugs." />
-    <MESSAGE value="Changed how fleets are stored and optimized code that nobody understands." />
-    <MESSAGE value="Fixed a bug where fleets were sent even if another planet had sent them earlier." />
-    <MESSAGE value="Simple code optimization." />
-    <MESSAGE value="For testing (all bots are the same code)" />
-    <MESSAGE value="For testing (bot is now calculating teammate attack)" />
-    <MESSAGE value="For testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="For testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed some bugs." />
   </component>
 </project>
