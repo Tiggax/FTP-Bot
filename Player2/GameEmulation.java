@@ -105,7 +105,7 @@ public class GameEmulation {
 
         planet.fleetSize += fleet.size * addOrSub(fleet.player, planet.player);
 
-        if (planet.fleetSize < 0){
+        if (planet.fleetSize <= 0){
             planet.fleetSize *= -1;
             planet.player = fleet.player;
         }
