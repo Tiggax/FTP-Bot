@@ -18,19 +18,21 @@ public class GameEmulation {
     }
 
 
-    public int runEmulation() {
+    public int runEmulation() throws CloneNotSupportedException {
 
         int score = 0;
 
         if(attackFleet != null) destinationPlanet.addAttackingFleets(attackFleet);
 
-        emulateOriginalPlanet(originPlanet);
-        if (PlayerData.isInMyTeam(originPlanet.player))score += originPlanet.fleetSize;
-        else score -= originPlanet.fleetSize;
+        for (int i = 0; i < Planet.planets.size(); i++) {
 
-        emulateAttackedPlanet(destinationPlanet);
-        if (PlayerData.isInMyTeam(destinationPlanet.player))score += destinationPlanet.fleetSize;
-        else score -= destinationPlanet.fleetSize;
+            Planet planet = (Planet) Planet.planets.get(i).clone();
+
+            emulatePlanet(planet);
+            if (PlayerData.isInMyTeam(planet.player)) score += planet.fleetSize;
+            else score -= planet.fleetSize;
+
+        }
 
         if(attackFleet != null) destinationPlanet.removeAttackingFleet(attackFleet);
 
@@ -40,7 +42,7 @@ public class GameEmulation {
 
 
 
-    private void emulateOriginalPlanet(Planet planet) {
+    private void emulatePlanet(Planet planet) {
 
         int previousTurn = startTurn;
 
@@ -51,7 +53,7 @@ public class GameEmulation {
             if (fleet.getNeededTurns() > turns) break;
             int currentTurn = fleet.getNeededTurns();
 
-            previousTurn = tryAttackingDestination(planet, previousTurn, currentTurn);
+            if(planet.name == originPlanet.name) previousTurn = tryAttackingDestination(planet, previousTurn, currentTurn);
 
             planet.fleetSize = getPlanetsFleets(planet, currentTurn - previousTurn);
             landFleetsToPlanet(fleet, planet);
@@ -59,7 +61,7 @@ public class GameEmulation {
 
         }
 
-        previousTurn = tryAttackingDestination(planet, previousTurn, turns);
+        if(planet.name == originPlanet.name) previousTurn = tryAttackingDestination(planet, previousTurn, turns);
 
         planet.fleetSize = getPlanetsFleets(planet, turns - previousTurn);
 
@@ -91,39 +93,15 @@ public class GameEmulation {
 
 
 
-
-    private void emulateAttackedPlanet(Planet planet){
-
-        int previousTurn = startTurn;
-
-        for (int i = 0; i < planet.getAttackingFleetsSize(); i++) {
-
-            Fleet fleet = planet.getAttackingFleets(i);
-
-            if (fleet.getNeededTurns() > turns) break;
-
-            int currentTurn = fleet.getNeededTurns();
-
-            planet.fleetSize = getPlanetsFleets(planet, currentTurn - previousTurn);
-            landFleetsToPlanet(fleet, planet);
-            previousTurn = currentTurn;
-
-        }
-
-        planet.fleetSize = getPlanetsFleets(planet, turns - previousTurn);
-
-    }
-
-
     private int getPlanetsFleets(Planet planet, int turns){
-        if (planet.player == Players.NEUTRAL)return planet.fleetSize;
+        if (planet.player == Players.NEUTRAL) return planet.fleetSize;
         return planet.getFleetSize(turns);
     }
 
 
     private void landFleetsToPlanet(Fleet fleet, Planet planet){
 
-        if (fleet.size <= 0)return;
+        if (fleet.size <= 0) return;
 
         planet.fleetSize += fleet.size * addOrSub(fleet.player, planet.player);
 
@@ -134,17 +112,22 @@ public class GameEmulation {
 
     }
 
-    private int addOrSub(Players first, Players second){
+    private int addOrSub(Players first, Players second) {
 
-        if(first == second)return 1;
+        if (first == second) return 1;
 
-        if (first == Players.FIRST_ENEMY && second == Players.SECOND_ENEMY)return 1;
-        if (first == Players.SECOND_ENEMY && second == Players.FIRST_ENEMY)return 1;
+        switch (first) {
+            case FIRST_ENEMY:
+                return (second == Players.SECOND_ENEMY) ? 1 : -1;
+            case SECOND_ENEMY:
+                return (second == Players.FIRST_ENEMY) ? 1 : -1;
+            case PLAYER:
+                return (second == Players.TEAMMATE) ? 1 : -1;
+            case TEAMMATE:
+                return (second == Players.PLAYER) ? 1 : -1;
+            default:
+                return -1;
+        }
 
-        if (first == Players.PLAYER && second == Players.TEAMMATE)return 1;
-        if (first == Players.TEAMMATE && second == Players.PLAYER)return 1;
-
-        return -1;
     }
-
 }

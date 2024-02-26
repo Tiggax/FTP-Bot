@@ -36,7 +36,6 @@ class AttackOrder{
 }
 public class Player {
 
-	public static int synchronize = 0;
 	public static int turn = 0;
 
 	public static int universeWidth;
@@ -66,7 +65,9 @@ public class Player {
 					for (int i = 0; i < Planet.planets.size(); i++) {
 
 						Planet originPlanet = Planet.planets.get(i);
+
 						if (originPlanet.player != Players.PLAYER) continue;
+						//if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
 
@@ -77,8 +78,6 @@ public class Player {
 							//Prevent attacking itself
 							if (originPlanet == destinationPlanet) continue;
 
-							//synchronize with teammate
-							if (((synchronize & turn) != (synchronize & destinationPlanet.name)) && Planet.getPlayerPlanetCount(Players.TEAMMATE) != 0 ) continue;
 
 							//Check if attacking planet can be reinforced
 							int canBeAttackByOthers = 0;
@@ -171,18 +170,6 @@ public class Player {
 			Log.print("ERROR: ");
 			Log.print(e.getMessage());
 
-
-			for (int i = 0; i < e.getStackTrace().length; i++) {
-				//Log.print(e.getStackTrace()[0].getLineNumber() + "");
-				//Log.print(e.getStackTrace()[0].getClassName() + "");
-				//Log.print(e.getStackTrace()[0].getClassLoaderName() + "");
-				//Log.print(e.getStackTrace()[0].getFileName() + "");
-				//Log.print(e.getStackTrace()[0].getMethodName() + "");
-				//Log.print(e.getStackTrace()[0].getModuleName() + "");
-				//Log.print(e.getStackTrace()[0].getModuleVersion() + "");
-			}
-
-
 			e.printStackTrace();
 
 		}
@@ -200,6 +187,7 @@ public class Player {
 
 		originPlanet.fleetSize -= fleet.size;
 		Planet.addFleet(fleet);
+		if (fleet.player != Players.PLAYER) return;
 		System.out.println("A " + fleet.originPlanet + " " + fleet.destinationPlanet + " " + fleet.size);
 	}
 
@@ -262,18 +250,6 @@ public class Player {
 	static void setTeammateAndEnemies(String teammateColor) {
 
 		PlayerData.setColor(Players.TEAMMATE, teammateColor);
-
-		//Set synchronization
-		for (String color : PlayerData.possibleColors) {
-			if (Objects.equals(color, PlayerData.getPlayerColor(Players.PLAYER))){
-				synchronize = 0;
-				break;
-			}
-			if (Objects.equals(color, PlayerData.getPlayerColor(Players.TEAMMATE))){
-				synchronize = 1;
-				break;
-			}
-		}
 
 		//Find enemies
 		for (String color : PlayerData.possibleColors) {
