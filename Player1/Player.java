@@ -66,8 +66,7 @@ public class Player {
 
 						Planet originPlanet = Planet.planets.get(i);
 
-						if (originPlanet.player != Players.PLAYER) continue;
-						//if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
+						if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
 
@@ -87,7 +86,7 @@ public class Player {
 								if (PlayerData.isInMyTeam(planet.player)) continue;
 								if (planet.player == destinationPlanet.player) continue;
 
-								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet))++canBeAttackByOthers;
+								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) ++canBeAttackByOthers;
 
 							}
 
