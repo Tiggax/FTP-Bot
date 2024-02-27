@@ -36,8 +36,6 @@ class AttackOrder{
 }
 public class Player {
 
-
-	public static int synchronize = 0;
 	public static int turn = 0;
 
 	public static int universeWidth;
@@ -48,12 +46,12 @@ public class Player {
 	private static final int emulateTurns = 50;
 	private static final int emulateAttackTime = 100;
 
+	private static final int defaultAttackFirstTurns = 40;
 
 
 	public static void main(String[] args) throws Exception {
 
 		try {
-
 
 			while (true) {
 
@@ -68,21 +66,19 @@ public class Player {
 					for (int i = 0; i < Planet.planets.size(); i++) {
 
 						Planet originPlanet = Planet.planets.get(i);
-						if (originPlanet.player != Players.PLAYER) continue;
+
+						if (originPlanet.player != Players.PLAYER && originPlanet.player != Players.TEAMMATE) continue;
 
 
 						ArrayList<AttackOrder> attackOrder = new ArrayList<>();
-
 
 						for (int j = 0; j < Planet.planets.size(); j++) {
 
 							Planet destinationPlanet = Planet.planets.get(j);
 
 							//Prevent attacking itself
-							if (originPlanet == destinationPlanet)continue;
+							if (originPlanet == destinationPlanet) continue;
 
-							//synchronize with teammate
-							if (((synchronize & turn) != (synchronize & destinationPlanet.name)) && Planet.getPlayerPlanetCount(Players.TEAMMATE) != 0 )continue;
 
 							//Check if attacking planet can be reinforced
 							int canBeAttackByOthers = 0;
@@ -92,14 +88,14 @@ public class Player {
 								if (PlayerData.isInMyTeam(planet.player)) continue;
 								if (planet.player == destinationPlanet.player) continue;
 
-								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet))++canBeAttackByOthers;
+								if (planet.turnDistance(destinationPlanet) < originPlanet.turnDistance(destinationPlanet)) ++canBeAttackByOthers;
 
 							}
 
-							GameEmulation ge_0 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), null, emulateTurns);
-							int ste = ge_0.runEmulation();
 
-							AttackOrder localBestScore = null;
+							GameEmulation ge_0 = new GameEmulation(originPlanet, destinationPlanet, null, emulateTurns);
+							int scoreWithoutAttack = ge_0.runEmulation();
+
 
 							for (int k = 0; k < emulateAttackTime; k++) {
 
@@ -112,39 +108,36 @@ public class Player {
 										originPlanet.turnDistance(destinationPlanet),
 										originPlanet.player);
 
-								GameEmulation ge_1 = new GameEmulation(Fleet.fleets, (Planet) originPlanet.clone(), (Planet) destinationPlanet.clone(), attackFleet, emulateTurns);
+								GameEmulation ge_1 = new GameEmulation(originPlanet, destinationPlanet, attackFleet, emulateTurns);
+								int score = ge_1.runEmulation() - scoreWithoutAttack;
 
-								int score = ge_1.runEmulation() - ste;
-								if(score > 0){
-									localBestScore = new AttackOrder(originPlanet, score, canBeAttackByOthers, attackFleet);
+								if(score > 0) {
+									attackOrder.add(new AttackOrder(destinationPlanet, score, canBeAttackByOthers, attackFleet));
 									break;
 								}
 
 							}
 
-
-							if(localBestScore != null)attackOrder.add(localBestScore);
-
 						}
 
-						if (attackOrder.isEmpty())continue;
+						if (attackOrder.isEmpty()) continue;
 
 						//Go true data and decide what to attack
-						//attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));
+
 
 						for (int j = 0; j < attackOrder.size(); j++) {
 
 							AttackOrder attack = attackOrder.get(j);
 
 							if (attack.canBeAttackByOthers == 0) {
-								attack(attack.fleet, originPlanet);
+								attack(attack, originPlanet);
 								break;
 							}
 
 							if (j == (attackOrder.size() - 1)) {
 								attack = attackOrder.get(0);
-								attack(attack.fleet, originPlanet);
+								attack(attack, originPlanet);
 								break;
 							}
 
@@ -180,18 +173,6 @@ public class Player {
 			Log.print("ERROR: ");
 			Log.print(e.getMessage());
 
-
-			for (int i = 0; i < e.getStackTrace().length; i++) {
-				//Log.print(e.getStackTrace()[0].getLineNumber() + "");
-				//Log.print(e.getStackTrace()[0].getClassName() + "");
-				//Log.print(e.getStackTrace()[0].getClassLoaderName() + "");
-				//Log.print(e.getStackTrace()[0].getFileName() + "");
-				//Log.print(e.getStackTrace()[0].getMethodName() + "");
-				//Log.print(e.getStackTrace()[0].getModuleName() + "");
-				//Log.print(e.getStackTrace()[0].getModuleVersion() + "");
-			}
-
-
 			e.printStackTrace();
 
 		}
@@ -201,22 +182,28 @@ public class Player {
 
 	}
 
-	static void attack(Fleet fleet, Planet originPlanet){
+	static void attack(AttackOrder attack, Planet originPlanet) throws IOException {
+
+
+		int attackSize = attack.fleet.size;
 
 		//Check if attack can be done
-		if (0 > fleet.currentTurn)return;
-		if (originPlanet.fleetSize * maxAttackRatio < fleet.size)return;
+		if (turn > defaultAttackFirstTurns) {
+			if (0 > attack.fleet.currentTurn) return;
+			if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
+		} else attackSize = attack.planet.fleetSize;
 
-		originPlanet.fleetSize -= fleet.size;
-		Fleet.fleets.add(fleet);
-		System.out.println("A " + fleet.originPlanet + " " + fleet.destinationPlanet + " " + fleet.size);
+
+		originPlanet.fleetSize -= attackSize;
+		Planet.addFleet(attack.fleet);
+		if (attack.fleet.player != Players.PLAYER) return;
+		System.out.println("A " + attack.fleet.originPlanet + " " + attack.fleet.destinationPlanet + " " + attackSize);
 	}
 
 	public static void getGameState() throws IOException {
 
 		//Reset data from previous turn
 		Planet.planets = new ArrayList<>();
-		Fleet.fleets = new ArrayList<>();
 
 		BufferedReader stdin = new BufferedReader(new java.io.InputStreamReader(System.in));
 
@@ -246,7 +233,7 @@ public class Player {
 
 				//Setup fleet
 				case 'F':
-					Fleet.addNewFleet(tokens);
+					Planet.addNewFleet(tokens);
 					break;
 
 				//Someone died (string is not in color????????? this data is totally useless)
@@ -255,7 +242,7 @@ public class Player {
 
 				//Get teammate data
 				case 'M':
-					if (Objects.equals(tokens[1], "NAME"))setTeammateAndEnemies(tokens[2]);
+					if (Objects.equals(tokens[1], "NAME")) setTeammateAndEnemies(tokens[2]);
 					break;
 
 				default:
@@ -269,21 +256,9 @@ public class Player {
 
 
 	//This functions setup teammate and also finds who are enemies
-	static void setTeammateAndEnemies(String teammateColor){
+	static void setTeammateAndEnemies(String teammateColor) {
 
 		PlayerData.setColor(Players.TEAMMATE, teammateColor);
-
-		//Set synchronization
-		for (String color : PlayerData.possibleColors) {
-			if (Objects.equals(color, PlayerData.getPlayerColor(Players.PLAYER))){
-				synchronize = 0;
-				break;
-			}
-			if (Objects.equals(color, PlayerData.getPlayerColor(Players.TEAMMATE))){
-				synchronize = 1;
-				break;
-			}
-		}
 
 		//Find enemies
 		for (String color : PlayerData.possibleColors) {

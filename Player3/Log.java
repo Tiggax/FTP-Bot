@@ -5,9 +5,12 @@ import java.io.IOException;
 public class Log {
 
     static BufferedWriter fileOut = null;
+    static private boolean enable = false;
 
 
     public static void print(String line) throws IOException {
+
+        if (!enable)return;
 
         if (fileOut == null) {
             FileWriter fstream = new FileWriter("Igralec.Log");
@@ -20,6 +23,11 @@ public class Log {
 
         fileOut.write(line);
         fileOut.flush();
+    }
+
+
+    public static void enable(){
+        enable = true;
     }
 
 
