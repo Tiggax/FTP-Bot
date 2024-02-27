@@ -43,7 +43,7 @@ public class Player {
 
 
 	private static final float maxAttackRatio = 1.0f;
-	private static final int emulateTurns = 70;
+	private static final int emulateTurns = 50;
 	private static final int emulateAttackTime = 100;
 
 	private static final int defaultAttackFirstTurns = 40;

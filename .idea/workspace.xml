@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="31e95fe7-a67b-4b66-bd40-a7eb40c35991" name="Changes" comment="Testing...">
-      <change beforePath="$PROJECT_DIR$/Player2/Planet.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Planet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player2/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player2/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Player1/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/Player1/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +77,7 @@
     "android.gradle.sync.needed": "true",
     "git-widget-placeholder": "testing",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/blaz/Desktop/FTP-Bot/Player2",
+    "last_opened_file_path": "/home/blaz/Desktop/FTP-Bot/Player1",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -87,10 +86,10 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Player4" />
       <recent name="$PROJECT_DIR$/Player1" />
-      <recent name="$PROJECT_DIR$/Player2" />
+      <recent name="$PROJECT_DIR$/Player4" />
       <recent name="$PROJECT_DIR$/Player3" />
+      <recent name="$PROJECT_DIR$/Player2" />
       <recent name="C:\Users\Blaz\IdeaProjects\FTP-Bot\Player2" />
     </key>
   </component>
@@ -347,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709035765620</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Testing...">
+      <option name="closed" value="true" />
+      <created>1709036341158</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1709036341158</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
