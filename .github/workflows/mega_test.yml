@@ -167,7 +167,41 @@ jobs:
 
           $summary | save summary.md --raw -f
 
-      
+      - name: Generate w/l Teams
+        shell: nu {0}
+        run: |
+          mut summary = (open summary.md --raw)
+          let sum = ${{ inputs.number }}
+          $summary ++= (open data.nuon 
+          | each { |game|
+            let game = ($game | update survive {|b| $b.survive | into bool})
+            let 1 = ($game | where STAT == "Player1" | first)
+            let 2 = ($game | where STAT == "Player2" | first)
+            let 3 = ($game | where STAT == "Player3" | first)
+            let 4 = ($game | where STAT == "Player4" | first)
+            
+            if ( $1.survive or $2.survive and ( not $3.survive or ( not $4.survive ))) {
+              1
+            } else if ([$1 $2 $3 $4] | get survive | all { |b| not $b }) {
+              3
+            } else {
+              2
+            }
+          } 
+          | group-by
+          | items {|i, v|
+            let v = ($v | length)
+            let wins = (""| fill -c "█" -w (($v / $sum ) * 120 | math round))
+            let losses = (""| fill -c "░" -w (((${{ inputs.number }} - $v) / $sum ) * 120 | math round)) 
+            { (match $i { "1" => "Team 1", "2" => "Team 2", "3" => "Tie" }): $v } 
+          } 
+          | into record 
+          | flatten 
+          | transpose "Team" "wins"
+          | to md)
+            
+          $summary | save summary.md --raw -f
+          
       - name: Generate w/l graph
         shell: nu {0}
         run: |
