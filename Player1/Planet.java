@@ -36,7 +36,13 @@ public class Planet implements Cloneable {
         this.player = player;
     }
 
-
+    public boolean amIAttacked() {
+        for (Fleet attackingFleet : attackingFleets) {
+            if (attackingFleet.player == Players.FIRST_ENEMY) return true;
+            if (attackingFleet.player == Players.SECOND_ENEMY) return true;
+        }
+        return false;
+    }
 
     public static int getPlayerPlanetCount(Players player){
         return playersPlanetFleetCount[player.ordinal()];

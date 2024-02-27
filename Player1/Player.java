@@ -46,9 +46,9 @@ public class Player {
 	private static final int emulateTurns = 50;
 	private static final int emulateAttackTime = 100;
 
-	private static final int defaultAttackFirstTurns = 40;
+	private static final int simpleAttackFirstTurns = 40;
 
-	private static final int ignoreDefaultAttackIfCloseToEnemy = 10;
+	private static final int ignoreSimpleAttackIfCloseToEnemy = 10;
 
 
 
@@ -60,8 +60,6 @@ public class Player {
 
 				//Get game inputs
 				getGameState();
-
-				long startTime = System.currentTimeMillis();
 
 				//We start after second turn because we don't know who is who before that
 				if (turn > 1) {
@@ -150,15 +148,6 @@ public class Player {
 
 				}
 
-
-				// Record the end time
-				long endTime = System.currentTimeMillis();
-
-				// Calculate and print the elapsed time
-				long elapsedTime = endTime - startTime;
-				Log.print("Elapsed Time: " + elapsedTime + " milliseconds");
-
-
 				//First turn we meet our teammate
 				if (turn == 0)System.out.println("M NAME " + PlayerData.getPlayerColor(Players.PLAYER));
 
@@ -190,10 +179,15 @@ public class Player {
 
 		int attackSize = attack.fleet.size;
 
+		boolean simpleAttack = false;
+		if (turn < simpleAttackFirstTurns) simpleAttack = !(originPlanet.getDistanceToClosestEnemy() < ignoreSimpleAttackIfCloseToEnemy || originPlanet.amIAttacked());
 
-		if (0 > attack.fleet.currentTurn) return;
-		if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
-
+		if (simpleAttack) attackSize = attack.planet.fleetSize;
+		else {
+			//Check if attack can be done
+			if (0 > attack.fleet.currentTurn) return;
+			if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
+		}
 
 		originPlanet.fleetSize -= attackSize;
 		Planet.addFleet(attack.fleet);
