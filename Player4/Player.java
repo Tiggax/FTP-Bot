@@ -190,11 +190,9 @@ public class Player {
 
 		int attackSize = attack.fleet.size;
 
-		if (turn > defaultAttackFirstTurns || originPlanet.getDistanceToClosestEnemy() < ignoreDefaultAttackIfCloseToEnemy) {
-			//Check if attack can be done
+
 			if (0 > attack.fleet.currentTurn) return;
 			if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
-		} else attackSize = attack.planet.fleetSize;
 
 
 		originPlanet.fleetSize -= attackSize;
