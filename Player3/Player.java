@@ -22,10 +22,12 @@ class AttackOrder{
 		this.fleet = fleet;
 	}
 
-	public float getScore() {return -score;}
+	public float getScore() {
+		return score;
+	}
 
 	public int getDistance(){
-		return fleet.neededTurns / 10;
+		return fleet.neededTurns;
 	}
 
 	public int getCanBeAttackByOthers() {
@@ -124,8 +126,8 @@ public class Player {
 						if (attackOrder.isEmpty()) continue;
 
 						//Go true data and decide what to attack
-						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));
+
 
 						for (int j = 0; j < attackOrder.size(); j++) {
 
