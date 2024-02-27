@@ -22,12 +22,10 @@ class AttackOrder{
 		this.fleet = fleet;
 	}
 
-	public float getScore() {
-		return score;
-	}
+	public float getScore() {return -score;}
 
 	public int getDistance(){
-		return fleet.neededTurns;
+		return fleet.neededTurns / 10;
 	}
 
 	public int getCanBeAttackByOthers() {
@@ -47,6 +45,9 @@ public class Player {
 	private static final int emulateAttackTime = 100;
 
 	private static final int defaultAttackFirstTurns = 40;
+
+	private static final int ignoreDefaultAttackIfCloseToEnemy = 10;
+
 
 
 	public static void main(String[] args) throws Exception {
@@ -123,8 +124,8 @@ public class Player {
 						if (attackOrder.isEmpty()) continue;
 
 						//Go true data and decide what to attack
+						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getScore));
 						attackOrder.sort(Comparator.comparingDouble(AttackOrder::getDistance));
-
 
 						for (int j = 0; j < attackOrder.size(); j++) {
 
@@ -187,8 +188,8 @@ public class Player {
 
 		int attackSize = attack.fleet.size;
 
-		//Check if attack can be done
-		if (turn > defaultAttackFirstTurns) {
+		if (turn > defaultAttackFirstTurns || originPlanet.getDistanceToClosestEnemy() < ignoreDefaultAttackIfCloseToEnemy) {
+			//Check if attack can be done
 			if (0 > attack.fleet.currentTurn) return;
 			if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
 		} else attackSize = attack.planet.fleetSize;
