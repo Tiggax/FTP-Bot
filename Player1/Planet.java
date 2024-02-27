@@ -129,7 +129,9 @@ public class Planet implements Cloneable {
         int distance = Integer.MAX_VALUE;
 
         for (Planet planet : planets) {
-            if (planet.player != Players.FIRST_ENEMY && planet.player != Players.SECOND_ENEMY) continue;
+            if (planet.player != Players.FIRST_ENEMY && planet.player != Players.SECOND_ENEMY) {
+                if (!planet.amIAttacked()) continue;
+            }
             int newDistance = turnDistance(planet);
             if (newDistance >= distance) continue;
             distance = newDistance;
