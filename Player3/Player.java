@@ -43,13 +43,10 @@ public class Player {
 
 
 	private static final float maxAttackRatio = 1.0f;
-	private static final int emulateTurns = 70;
+	private static final int emulateTurns = 50;
 	private static final int emulateAttackTime = 100;
 
 	private static final int defaultAttackFirstTurns = 40;
-
-	private static final int ignoreDefaultAttackIfCloseToEnemy = 10;
-
 
 
 	public static void main(String[] args) throws Exception {
@@ -190,8 +187,8 @@ public class Player {
 
 		int attackSize = attack.fleet.size;
 
-		if (turn > defaultAttackFirstTurns || originPlanet.getDistanceToClosestEnemy() < ignoreDefaultAttackIfCloseToEnemy) {
-			//Check if attack can be done
+		//Check if attack can be done
+		if (turn > defaultAttackFirstTurns) {
 			if (0 > attack.fleet.currentTurn) return;
 			if (originPlanet.fleetSize * maxAttackRatio < attackSize) return;
 		} else attackSize = attack.planet.fleetSize;
